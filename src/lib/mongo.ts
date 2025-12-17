@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb'
 
+console.log('MONGO URI:', process.env.MONGODB_URI)
 const uri = process.env.MONGODB_URI
 
 if (!uri) {
