@@ -23,19 +23,19 @@ export async function POST(req: Request) {
             return new Response(JSON.stringify({ error: 'Name and phone are required' }), { status: 400 })
         }
 
-        const client = await clientPromise
-        const db = client.db('flowautodb')
-
-        const newRequest = {
-            name,
-            phone,
-            email: email || '',
-            message: message || '',
-            status: 'NEW',
-            createdAt: new Date()
-        }
-
-        const result = await db.collection('requests').insertOne(newRequest)
+        // const client = await clientPromise
+        // const db = client.db('flowautodb')
+        //
+        // const newRequest = {
+        //     name,
+        //     phone,
+        //     email: email || '',
+        //     message: message || '',
+        //     status: 'NEW',
+        //     createdAt: new Date()
+        // }
+        //
+        // const result = await db.collection('requests').insertOne(newRequest)
 
         // Отправляем уведомление боту
         const BOT_TOKEN = process.env.BOT_TOKEN
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
             })
         }
 
-        return new Response(JSON.stringify({ success: true, id: result.insertedId }), { status: 201 })
+        return new Response(JSON.stringify({ success: true }), { status: 201 })
     } catch (error) {
         console.error(error)
         return new Response(JSON.stringify({ error: 'Something went wrong' }), { status: 500 })
