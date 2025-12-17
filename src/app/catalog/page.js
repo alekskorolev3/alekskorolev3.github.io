@@ -26,19 +26,19 @@ export default function CatalogPage() {
     under160hp: false
   });
 
-  const fetchData = async() => {
-    const res = await fetch('/api/cars');
-    const cars = await res.json();
-
-    console.log(cars)
-
-    return cars
-  }
-
-  useEffect( ()=> {
-    fetchData()
-        .then(data => setCars(() => data))
-  }, [])
+  // const fetchData = async() => {
+  //   const res = await fetch('/api/cars');
+  //   const cars = await res.json();
+  //
+  //   console.log(cars)
+  //
+  //   return cars
+  // }
+  //
+  // useEffect( ()=> {
+  //   fetchData()
+  //       .then(data => setCars(() => data))
+  // }, [])
 
   const handleFilterChange = (key, value) => {
     setFilters(prev => ({ ...prev, [key]: value }));
