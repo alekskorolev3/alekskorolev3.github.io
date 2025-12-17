@@ -16,7 +16,7 @@ export default function ContactsPage() {
     e.preventDefault()
 
     try {
-      const res = await fetch('https://api.flowauto.ru/', {
+      const res = await fetch('https://api.flowauto.ru/api/requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
