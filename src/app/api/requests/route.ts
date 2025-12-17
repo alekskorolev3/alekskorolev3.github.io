@@ -1,5 +1,4 @@
 import clientPromise from '@/lib/mongo'
-import 'dotenv'
 
 export async function GET() {
     const client = await clientPromise
