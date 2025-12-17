@@ -1,18 +1,18 @@
 import clientPromise from '@/lib/mongo'
 
-export async function GET() {
-    const client = await clientPromise
-    const db = client.db("flowautodb")
-
-    const items = await db
-        .collection('requests')
-        .find()
-        .sort({ createdAt: -1 })
-        .limit(10)
-        .toArray()
-
-    return Response.json(items)
-}
+// export async function GET() {
+//     const client = await clientPromise
+//     const db = client.db("flowautodb")
+//
+//     const items = await db
+//         .collection('requests')
+//         .find()
+//         .sort({ createdAt: -1 })
+//         .limit(10)
+//         .toArray()
+//
+//     return Response.json(items)
+// }
 
 export async function POST(req: Request) {
     try {
