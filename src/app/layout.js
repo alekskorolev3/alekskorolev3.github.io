@@ -16,6 +16,7 @@ export default function RootLayout({children}) {
                     rel="stylesheet"
                     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
                 />
+                <title></title>
             </head>
             <body className="flex flex-col min-h-screen">
                 <Header/>

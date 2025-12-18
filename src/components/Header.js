@@ -4,11 +4,20 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Facebook, Instagram, MessageCircle, Phone } from 'lucide-react'
 import Logo from '../imports/Logo22221'
+import {useEffect, useState} from "react";
 
 const Header = () => {
   const pathname = usePathname()
+  const [mounted, setMounted] = useState(false)
 
-  const isActive = (path) => pathname === path
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
+  const normalize = (path) => path.replace(/\/$/, '')
+  const isActive = (path) => normalize(pathname) === normalize(path)
 
   return (
       <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -26,15 +35,6 @@ const Header = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#ffd632] transition-colors"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-
               <a
                   href="https://instagram.com"
                   target="_blank"
@@ -66,9 +66,9 @@ const Header = () => {
             </Link>
 
             <nav className="hidden md:flex items-center gap-8">
-              <NavLink href="/catalog" active={isActive('/catalog')}>
-                Каталог
-              </NavLink>
+              {/*<NavLink href="/catalog" active={isActive('/catalog')}>*/}
+              {/*  Каталог*/}
+              {/*</NavLink>*/}
               <NavLink href="/services" active={isActive('/services')}>
                 Услуги
               </NavLink>
