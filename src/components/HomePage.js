@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import {Car, Shield, Clock, DollarSign, ArrowRight, CheckCircle, FileText, Search} from 'lucide-react';
+import {Car, Shield, Clock, DollarSign, ArrowRight, CheckCircle, FileText, Search, ChevronLeft, ChevronRight, Eye, Truck} from 'lucide-react';
 import ImageWithFallback from '../components/figma/ImageWithFallback';
+import {useEffect, useState} from "react";
 
 export default function HomePage() {
 
@@ -32,6 +33,97 @@ export default function HomePage() {
             subtitle: "Доставляем автомобиль в ваш город, помогаем с постановкой на учёт. Вы получаете ключи и документы!"
         },
     ]
+
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [slidesPerView, setSlidesPerView] = useState(3);
+
+    useEffect(() => {
+        const updateSlides = () => {
+            setSlidesPerView(window.innerWidth < 768 ? 1 : 3);
+        };
+
+        updateSlides();
+        window.addEventListener('resize', updateSlides);
+        return () => window.removeEventListener('resize', updateSlides);
+    }, []);
+
+    const services = [
+        {
+            id: 1,
+            icon: Search,
+            title: 'Подбор автомобиля под ключ',
+            description: 'Полный цикл поиска и покупки автомобиля в Беларуси',
+            features: [
+                'Поиск по критериям',
+                'Проверка чистоты',
+                'Диагностика',
+                'Оформление'
+            ],
+            price: 'от 30 000 ₽'
+        },
+        {
+            id: 2,
+            icon: Eye,
+            title: 'Разовый осмотр автомобиля',
+            description: 'Профессиональный осмотр выбранного вами автомобиля',
+            features: [
+                'Визуальный осмотр кузова',
+                'Проверка ЛКП',
+                'Диагностика систем',
+                'Подробный отчет'
+            ],
+            price: 'от 5 000 ₽'
+        },
+        {
+            id: 3,
+            icon: FileText,
+            title: 'Юридическое сопровождение',
+            description: 'Полное юридическое сопровождение сделки',
+            features: [
+                'Проверка документов',
+                'Проверка истории',
+                'Составление договора',
+                'Консультации'
+            ],
+            price: 'от 15 000 ₽'
+        },
+        {
+            id: 4,
+            icon: Truck,
+            title: 'Доставка автомобиля',
+            description: 'Транспортировка автомобиля из Беларуси в Россию',
+            features: [
+                'Доставка автопоездом',
+                'Растаможка',
+                'Постановка на учёт',
+                'Передача документов'
+            ],
+            price: 'от 20 000 ₽'
+        },
+        {
+            id: 5,
+            icon: Shield,
+            title: 'Гарантийное обслуживание',
+            description: 'Гарантия на все проведенные работы',
+            features: [
+                'Гарантия чистоты',
+                'Гарантия состояния',
+                'Помощь при проблемах',
+                'Постгарантийная поддержка'
+            ],
+            price: 'Включено в пакет'
+        }
+    ];
+
+    const maxSlide = services.length - slidesPerView;
+
+    const nextSlide = () => {
+        setCurrentSlide((prev) => (prev >= maxSlide ? 0 : prev + 1));
+    };
+
+    const prevSlide = () => {
+        setCurrentSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
+    };
 
     return (
         <div>
@@ -89,12 +181,15 @@ export default function HomePage() {
 
                         {stepsData.map(item => (
                             <div key={item.id} className="relative">
-                                <div className="h-100 max-h-[270px] bg-white rounded-xl p-6 border-2 border-gray-100 hover:border-[#ffd632] transition-all duration-300 hover:shadow-lg relative z-10">
-                                    <div className="absolute -top-4 -left-4 w-12 h-12 bg-[#ffd632] rounded-full flex items-center justify-center shadow-lg">
+                                <div
+                                    className="cursor-pointer h-100 max-h-[270px] bg-white rounded-xl p-6 border-2 border-gray-100 hover:border-[#ffd632] transition-all duration-300 hover:shadow-lg relative z-10">
+                                    <div
+                                        className="absolute -top-4 -left-4 w-12 h-12 bg-[#ffd632] rounded-full flex items-center justify-center shadow-lg">
                                         <span className="text-black font-medium">{item.id}</span>
                                     </div>
 
-                                    <div className="w-16 h-16 bg-[#ffd632] bg-opacity-20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                    <div
+                                        className="w-16 h-16 bg-[#ffd632] bg-opacity-20 rounded-full flex items-center justify-center mb-4 mx-auto">
                                         {item.icon}
                                     </div>
 
@@ -127,6 +222,118 @@ export default function HomePage() {
                                 <ArrowRight className="w-5 h-5"/>
                             </Link>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="py-16 bg-white">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="mb-4">Наши услуги</h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto">
+                            Полный спектр услуг по подбору автомобилей из Беларуси.
+                            От поиска до постановки на учёт — мы берём всё на себя.
+                        </p>
+                    </div>
+
+                    {/* Slider Container */}
+                    <div className="relative max-w-6xl mx-auto">
+                        {/* Custom Navigation Buttons */}
+                        <button
+                            onClick={prevSlide}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 w-12 h-12 bg-[#ffd632] hover:bg-[#e6c02d] rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+                            aria-label="Previous"
+                        >
+                            <ChevronLeft className="w-6 h-6 text-black"/>
+                        </button>
+
+                        <button
+                            onClick={nextSlide}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 w-12 h-12 bg-[#ffd632] hover:bg-[#e6c02d] rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+                            aria-label="Next"
+                        >
+                            <ChevronRight className="w-6 h-6 text-black"/>
+                        </button>
+
+                        {/* Slider */}
+                        <div className="overflow-hidden">
+                            <div
+                                className="flex transition-transform duration-500 ease-in-out"
+                                style={{transform: `translateX(calc(-${currentSlide * (100 / 3)}%))`}}
+                            >
+                                {services.map((service) => {
+                                    const Icon = service.icon;
+                                    return (
+                                        <div key={service.id} className="flex-shrink-0 px-4"  style={{ width: `${100 / slidesPerView}%` }}>
+                                            <div className="flex flex-col justify-between h-100 bg-white rounded-xl p-6 border-2 border-gray-100 hover:border-[#ffd632] hover:shadow-lg transition-all duration-300 group">
+                                                <div>
+                                                    <div
+                                                        className="w-16 h-16 bg-[#ffd632] bg-opacity-20 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:bg-[#ffd632] transition-colors">
+                                                        <Icon className="w-8 h-8 text-black"/>
+                                                    </div>
+
+                                                    {/* Заголовок и описание */}
+                                                    <h3 className="text-center mb-3 text-base">{service.title}</h3>
+                                                    <p className="text-gray-600 text-sm mb-4 text-center min-h-[40px]">{service.description}</p>
+
+                                                    {/* Список возможностей */}
+                                                    <ul className="space-y-2 mb-6">
+                                                        {service.features.map((feature, index) => (
+                                                            <li key={index}
+                                                                className="flex items-center gap-2 text-sm text-gray-700">
+                                                                <CheckCircle
+                                                                    className="w-4 h-4 text-green-500 flex-shrink-0"/>
+                                                                <span>{feature}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+
+                                                {/* Цена и кнопка */}
+                                                <div className="pt-4 border-t border-gray-100">
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="text-black text-md font-medium">{service.price}</span>
+                                                        <Link
+                                                            href="/services"
+                                                            className="text-black hover:text-[#ffd632] transition-colors flex items-center gap-1 duration-300 text-sm"
+                                                        >
+                                                            Подробнее
+                                                            <ArrowRight className="w-4 h-4"/>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        {/* Dots indicator */}
+                        <div className="flex justify-center gap-2 mt-8">
+                            {Array.from({ length: services.length - slidesPerView + 1 }).map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentSlide(index)}
+                                    className={`w-3 h-3 rounded-full transition-all ${
+                                        currentSlide === index
+                                            ? 'bg-[#ffd632] w-8'
+                                            : 'bg-gray-300 hover:bg-gray-400'
+                                    }`}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Кнопка "Все услуги" */}
+                    <div className="text-center mt-12">
+                        <Link
+                            href="/services"
+                            className="bg-white border-2 border-black text-black px-8 py-3 rounded-lg hover:bg-black hover:text-white transition-all inline-flex items-center gap-2"
+                        >
+                            Все услуги
+                            <ArrowRight className="w-5 h-5"/>
+                        </Link>
                     </div>
                 </div>
             </section>
