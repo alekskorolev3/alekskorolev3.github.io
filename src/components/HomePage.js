@@ -1,7 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import {Car, Shield, Clock, DollarSign, ArrowRight, CheckCircle, FileText, Search, ChevronLeft, ChevronRight, Eye, Truck} from 'lucide-react';
+import {
+    ArrowRight,
+    Car,
+    CheckCircle,
+    ChevronLeft,
+    ChevronRight,
+    Clock,
+    DollarSign,
+    Eye,
+    FileText,
+    Search,
+    Shield,
+    Truck
+} from 'lucide-react';
 import ImageWithFallback from '../components/figma/ImageWithFallback';
 import {useEffect, useState} from "react";
 
@@ -128,41 +141,72 @@ export default function HomePage() {
     return (
         <div>
             {/* Hero Section */}
-            <section className="relative bg-white py-16 md:py-20 overflow-hidden">
+            <section className="relative bg-white py-12 md:py-20 overflow-hidden">
                 <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                        <div className="max-w-2xl">
-                            <h1 className="mb-6 font-bold text-[rgb(60,60,60)] text-[20px] font-[Montserrat]">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+
+                        {/* Текст */}
+                        <div className="max-w-2xl text-center lg:text-left">
+                            <h1 className="mb-6 font-bold text-[rgb(60,60,60)] text-lg md:text-xl font-[Montserrat]">
                                 Подбор автомобилей из Беларуси под ключ — доставка, проверка, оформление
                             </h1>
-                            <p className="text-xl mb-[32px] text-gray-600 mt-0 mr-[110px] ml-0">
+
+                            <p className="text-base md:text-xl mb-8 text-gray-600">
                                 Профессиональный подбор и доставка автомобилей с полным юридическим сопровождением.
                                 Экономьте до 30% на покупке авто.
                             </p>
-                            <div className="flex flex-wrap gap-4">
-                                <Link href="/calculator"
-                                      className="bg-[#ffd632] text-black px-8 py-3 rounded-lg hover:bg-[#e6c02d] transition-colors inline-flex items-center gap-2">
+
+                            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                                <Link
+                                    href="/calculator"
+                                    className="bg-[#ffd632] text-black px-8 py-3 rounded-lg hover:bg-[#e6c02d] transition-colors inline-flex items-center justify-center gap-2"
+                                >
                                     Калькулятор стоимости
                                     <ArrowRight className="w-5 h-5"/>
                                 </Link>
-                                <Link href="/services"
-                                      className="bg-white border-2 border-black text-black px-8 py-3 rounded-lg hover:bg-black hover:text-white transition-colors">
+
+                                <Link
+                                    href="/services"
+                                    className="bg-white border-2 border-black text-black px-8 py-3 rounded-lg hover:bg-black hover:text-white transition-colors text-center"
+                                >
                                     Услуги
                                 </Link>
                             </div>
                         </div>
 
-                        <div className="relative lg:absolute lg:-right-48 lg:top-1/2 lg:w-[62.5%] z-10"
-                             style={{transform: 'translateY(calc(-50% + 20px))'}}>
+                        {/* Картинка */}
+                        <div
+                            className="
+                                          relative
+                                          w-full
+                                          flex
+                                          justify-center
+                                          lg:absolute
+                                          lg:right-[-12rem]
+                                          lg:top-1/2
+                                          lg:w-[62.5%]
+                                          lg:-translate-y-1/2
+                                        "
+                        >
                             <img
                                 src="/hero_car.avif"
                                 alt="Спортивный автомобиль"
-                                className="w-[115%] h-auto object-contain"
+                                className="
+                                            w-full
+                                            max-w-[420px]
+                                            sm:max-w-[520px]
+                                            md:max-w-[640px]
+                                            lg:max-w-[800px]
+                                            h-auto
+                                            object-contain
+                                          "
                             />
                         </div>
+
                     </div>
                 </div>
             </section>
+
 
             <section className="py-16 bg-white">
                 <div className="container mx-auto px-4">
@@ -236,36 +280,69 @@ export default function HomePage() {
                         </p>
                     </div>
 
-                    {/* Slider Container */}
-                    <div className="relative max-w-6xl mx-auto">
-                        {/* Custom Navigation Buttons */}
+                    <div className="relative max-w-6xl mx-auto px-2 sm:px-0">
                         <button
                             onClick={prevSlide}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 w-12 h-12 bg-[#ffd632] hover:bg-[#e6c02d] rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+                            className="
+                                        absolute left-1 sm:left-0
+                                        top-1/2 -translate-y-1/2
+                                        z-10
+                                        w-9 h-9 sm:w-12 sm:h-12
+                                        bg-[#ffd632] hover:bg-[#e6c02d]
+                                        rounded-full flex items-center justify-center
+                                        shadow-lg transition-all
+                                      "
                             aria-label="Previous"
                         >
-                            <ChevronLeft className="w-6 h-6 text-black"/>
+                            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-black"/>
                         </button>
 
                         <button
                             onClick={nextSlide}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 w-12 h-12 bg-[#ffd632] hover:bg-[#e6c02d] rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110"
+                            className="
+                                        absolute right-1 sm:right-0
+                                        top-1/2 -translate-y-1/2
+                                        z-10
+                                        w-9 h-9 sm:w-12 sm:h-12
+                                        bg-[#ffd632] hover:bg-[#e6c02d]
+                                        rounded-full flex items-center justify-center
+                                        shadow-lg transition-all
+                                      "
                             aria-label="Next"
                         >
-                            <ChevronRight className="w-6 h-6 text-black"/>
+                            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-black"/>
                         </button>
 
                         {/* Slider */}
                         <div className="overflow-hidden">
                             <div
                                 className="flex transition-transform duration-500 ease-in-out"
-                                style={{transform: `translateX(calc(-${currentSlide * (100 / 3)}%))`}}
+                                style={{
+                                    transform:
+                                        slidesPerView === 1
+                                            ? `translateX(-${currentSlide * 100}%)`
+                                            : `translateX(-${currentSlide * (100 / slidesPerView)}%)`
+                                }}
                             >
                                 {services.map((service) => {
                                     const Icon = service.icon;
                                     return (
-                                        <div key={service.id} className="flex-shrink-0 px-4"  style={{ width: `${100 / slidesPerView}%` }}>
-                                            <div className="flex flex-col justify-between h-100 bg-white rounded-xl p-6 border-2 border-gray-100 hover:border-[#ffd632] hover:shadow-lg transition-all duration-300 group">
+                                        <div key={service.id} className="flex-shrink-0 px-2 sm:px-4"
+                                             style={{
+                                                 width: slidesPerView === 1 ? '100%' : `${100 / slidesPerView}%`
+                                             }}
+                                        >
+                                            <div
+                                                className="
+                                                              flex flex-col justify-between
+                                                              h-full
+                                                              bg-white rounded-xl
+                                                              p-5 sm:p-6
+                                                              border-2 border-gray-100
+                                                              hover:border-[#ffd632] hover:shadow-lg
+                                                              transition-all duration-300
+                                                            "
+                                            >
                                                 <div>
                                                     <div
                                                         className="w-16 h-16 bg-[#ffd632] bg-opacity-20 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:bg-[#ffd632] transition-colors">
@@ -292,7 +369,8 @@ export default function HomePage() {
                                                 {/* Цена и кнопка */}
                                                 <div className="pt-4 border-t border-gray-100">
                                                     <div className="flex items-center justify-between">
-                                                        <span className="text-black text-md font-medium">{service.price}</span>
+                                                        <span
+                                                            className="text-black text-md font-medium">{service.price}</span>
                                                         <Link
                                                             href="/services"
                                                             className="text-black hover:text-[#ffd632] transition-colors flex items-center gap-1 duration-300 text-sm"
@@ -310,8 +388,8 @@ export default function HomePage() {
                         </div>
 
                         {/* Dots indicator */}
-                        <div className="flex justify-center gap-2 mt-8">
-                            {Array.from({ length: services.length - slidesPerView + 1 }).map((_, index) => (
+                        <div className="flex justify-center gap-2 mt-6 sm:mt-8">
+                            {Array.from({length: services.length - slidesPerView + 1}).map((_, index) => (
                                 <button
                                     key={index}
                                     onClick={() => setCurrentSlide(index)}
@@ -325,7 +403,6 @@ export default function HomePage() {
                         </div>
                     </div>
 
-                    {/* Кнопка "Все услуги" */}
                     <div className="text-center mt-12">
                         <Link
                             href="/services"
