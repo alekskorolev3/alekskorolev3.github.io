@@ -8,6 +8,12 @@ function getArticle(slug) {
     return news.find(article => article.slug === slug)
 }
 
+export function generateStaticParams() {
+    return news.map(article => ({
+        slug: article.slug,
+    }))
+}
+
 // SEO
 export async function generateMetadata({ params }) {
     const { slug } = await params
