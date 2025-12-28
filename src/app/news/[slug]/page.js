@@ -53,6 +53,7 @@ export default async function ArticlePage({ params }) {
                     src={article.image}
                     alt={article.title}
                     fill
+                    unoptimized
                     className="object-cover rounded-lg"
                     priority
                 />
