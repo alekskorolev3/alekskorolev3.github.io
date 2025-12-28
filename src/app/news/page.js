@@ -1,62 +1,111 @@
+import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
 import ImageWithFallback from '@/components/figma/ImageWithFallback';
 
-const news = [
+export const news = [
   {
     id: 1,
+    slug: 'novye-pravila-vvoza-avto-2025',
     title: 'Новые правила ввоза автомобилей из Беларуси в 2025 году',
-    date: '20 ноября 2024',
+    description: 'Обновленные правила растаможки автомобилей из Беларуси в 2025 году и их влияние на стоимость подбора.',
+    date: '2024-11-20',
     category: 'Законодательство',
-    image: 'https://images.unsplash.com/photo-1705747401901-28363172fe7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjYXIlMjBzaG93cm9vbXxlbnwxfHx8fDE3NjM4MTgwNjF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-    excerpt: 'С 1 января 2025 года вступают в силу обновленные правила растаможки автомобилей. Разбираем все изменения и их влияние на стоимость подбора.',
-    content: 'Правительство РФ объявило о новых правилах ввоза автомобилей...'
+    image: 'https://images.unsplash.com/photo-1705747401901-28363172fe7e',
+    excerpt:
+        'С 1 января 2025 года вступают в силу обновленные правила растаможки автомобилей. Разбираем ключевые изменения.',
+    content: `
+      <p>С 1 января 2025 года вступают в силу обновленные правила ввоза автомобилей из Беларуси на территорию РФ.</p>
+      <p>Основные изменения касаются порядка растаможки, расчета пошлин и экологических требований.</p>
+      <p>Эти нововведения могут существенно повлиять на конечную стоимость подбора автомобиля.</p>
+    `,
   },
+
   {
     id: 2,
+    slug: 'top-5-populyarnyh-avto-noyabr',
     title: 'Топ-5 самых популярных моделей для подбора в ноябре',
-    date: '15 ноября 2024',
+    description: 'Рейтинг самых востребованных автомобилей для подбора из Беларуси по итогам ноября.',
+    date: '2024-11-15',
     category: 'Аналитика',
-    image: 'https://images.unsplash.com/photo-1762949857740-8dfe34f62220?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzZWRhbiUyMGNhcnxlbnwxfHx8fDE3NjM3ODE3NDd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-    excerpt: 'Проанализировали запросы клиентов за ноябрь и составили рейтинг самых востребованных автомобилей для подбора из Беларуси.',
-    content: 'В ноябре лидером по запросам стала Toyota Camry...'
+    image: 'https://images.unsplash.com/photo-1762949857740-8dfe34f62220',
+    excerpt:
+        'Проанализировали запросы клиентов за ноябрь и составили рейтинг самых популярных автомобилей.',
+    content: `
+      <p>В ноябре спрос на автомобили из Беларуси заметно сместился в сторону надежных и ликвидных моделей.</p>
+      <p>Лидером по количеству запросов стала Toyota Camry, за ней следуют Volkswagen Passat и Skoda Octavia.</p>
+      <p>Также в рейтинг вошли два кроссовера, которые показали рост интереса.</p>
+    `,
   },
+
   {
     id: 3,
+    slug: 'kak-sekonomit-na-podbore-avto',
     title: 'Как сэкономить на подборе автомобиля: 7 советов экспертов',
-    date: '10 ноября 2024',
+    description: 'Практические советы экспертов, как снизить затраты на подбор и доставку автомобиля.',
+    date: '2024-11-10',
     category: 'Советы',
-    image: 'https://images.unsplash.com/photo-1763178907914-c05ca7eeeceb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdXYlMjBjYXIlMjBzaWRlJTIwdmlld3xlbnwxfHx8fDE3NjM4MTgwNjF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-    excerpt: 'Наши эксперты поделились проверенными способами снизить затраты на покупку и доставку автомобиля из Беларуси.',
-    content: 'Подбор автомобиля - это уже выгодное решение...'
+    image: 'https://images.unsplash.com/photo-1763178907914-c05ca7eeeceb',
+    excerpt:
+        'Наши эксперты поделились проверенными способами снизить затраты на покупку автомобиля из Беларуси.',
+    content: `
+      <p>Подбор автомобиля — это уже выгодное решение, но есть способы сделать его еще дешевле.</p>
+      <p>Мы собрали 7 практических советов, которые помогут избежать лишних расходов.</p>
+      <p>От выбора комплектации до оптимизации логистики — рассказываем по шагам.</p>
+    `,
   },
+
   {
     id: 4,
+    slug: 'otkrytie-ofisa-v-sankt-peterburge',
     title: 'Открытие нового офиса в Санкт-Петербурге',
-    date: '5 ноября 2024',
+    description: 'Мы открыли новый офис в Санкт-Петербурге, чтобы быть ближе к клиентам.',
+    date: '2024-11-05',
     category: 'Компания',
-    image: 'https://images.unsplash.com/photo-1696581084151-8a038c7dfc83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzcG9ydHMlMjBjYXIlMjByZWR8ZW58MXx8fHwxNzYzNzMzMzgxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-    excerpt: 'Рады сообщить об открытии нашего нового офиса в Санкт-Петербурге. Теперь мы еще ближе к нашим клиентам из северной столицы.',
-    content: 'Мы продолжаем расширяться и развиваться...'
+    image: 'https://images.unsplash.com/photo-1696581084151-8a038c7dfc83',
+    excerpt:
+        'Рады сообщить об открытии нового офиса в Санкт-Петербурге для клиентов из северной столицы.',
+    content: `
+      <p>Мы продолжаем расширяться и рады сообщить об открытии нового офиса в Санкт-Петербурге.</p>
+      <p>Теперь клиенты из северо-западного региона смогут получать консультации еще быстрее.</p>
+      <p>Адрес и график работы доступны на странице контактов.</p>
+    `,
   },
+
   {
     id: 5,
+    slug: 'elektromobili-iz-belarusi',
     title: 'Электромобили из Беларуси: особенности подбора',
-    date: '1 ноября 2024',
+    description: 'Особенности подбора и покупки электромобилей из Беларуси.',
+    date: '2024-11-01',
     category: 'Советы',
-    image: 'https://images.unsplash.com/photo-1762949857740-8dfe34f62220?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzZWRhbiUyMGNhcnxlbnwxfHx8fDE3NjM3ODE3NDd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-    excerpt: 'Все больше клиентов интересуются электромобилями. Рассказываем о нюансах покупки и подбора электрокаров из Беларуси.',
-    content: 'Рынок электромобилей активно развивается...'
+    image: 'https://images.unsplash.com/photo-1762949857740-8dfe34f62220',
+    excerpt:
+        'Все больше клиентов интересуются электромобилями. Рассказываем о ключевых нюансах подбора.',
+    content: `
+      <p>Рынок электромобилей активно развивается, и Беларусь не является исключением.</p>
+      <p>При подборе электрокара важно учитывать состояние батареи, запас хода и инфраструктуру зарядок.</p>
+      <p>Мы рассказываем, на что обратить внимание при покупке.</p>
+    `,
   },
+
   {
     id: 6,
+    slug: '500-uspeshnyh-sdelok',
     title: 'Успешно завершили 500-ю сделку!',
-    date: '25 октября 2024',
+    description: 'Наша компания успешно завершила 500-ю сделку по подбору автомобилей.',
+    date: '2024-10-25',
     category: 'Компания',
-    image: 'https://images.unsplash.com/photo-1705747401901-28363172fe7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjYXIlMjBzaG93cm9vbXxlbnwxfHx8fDE3NjM4MTgwNjF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-    excerpt: 'Мы гордимся тем, что помогли 500 клиентам приобрести автомобили их мечты. Спасибо за доверие!',
-    content: 'Это важная веха в истории нашей компании...'
-  }
-];
+    image: 'https://images.unsplash.com/photo-1705747401901-28363172fe7e',
+    excerpt:
+        'Мы гордимся тем, что помогли 500 клиентам приобрести автомобили их мечты.',
+    content: `
+      <p>Для нас это важная веха и показатель доверия со стороны клиентов.</p>
+      <p>Каждая сделка — это индивидуальный подход и ответственность за результат.</p>
+      <p>Спасибо всем, кто выбрал нас!</p>
+    `,
+  },
+]
+
 
 const categories = ['Все', 'Законодательство', 'Аналитика', 'Советы', 'Компания'];
 
@@ -119,10 +168,6 @@ export default function NewsPage() {
                 </div>
                 <h2 className="mb-4">{news[0].title}</h2>
                 <p className="text-gray-600 mb-6">{news[0].excerpt}</p>
-                <button className="text-black hover:text-gray-700 flex items-center gap-2 w-fit">
-                  Читать полностью
-                  <ArrowRight className="w-5 h-5" />
-                </button>
               </div>
             </div>
           </div>
@@ -152,10 +197,10 @@ export default function NewsPage() {
                   </div>
                   <h3 className="mb-3">{article.title}</h3>
                   <p className="text-gray-600 text-sm mb-4">{article.excerpt}</p>
-                  <button className="text-black hover:text-gray-700 flex items-center gap-2 text-sm">
+                  <Link href={`/news/${article.slug}`} className="text-black hover:text-gray-700 flex items-center gap-2">
                     Читать далее
                     <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

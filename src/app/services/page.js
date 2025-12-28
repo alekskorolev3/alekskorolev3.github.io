@@ -1,5 +1,6 @@
-import { CheckCircle, Search, Eye, FileText, Truck, Shield } from 'lucide-react';
+import {CheckCircle, Search, Eye, FileText, Truck, Shield, Car, Clock, ArrowRight, DollarSign} from 'lucide-react';
 import Link from 'next/link';
+import CTA from "@/components/CTA";
 
 const services = [
   {
@@ -79,7 +80,36 @@ const services = [
   }
 ];
 
+const stepsData = [
+  {
+    id: 1,
+    icon: <Search/>,
+    title: "Заявка и консультация",
+    subtitle: "Вы оставляете заявку или звоните нам. Обсуждаем ваши пожелания, бюджет и подбираем оптимальные варианты."
+  },
+  {
+    id: 2,
+    icon: <Car/>,
+    title: "Поиск и проверка",
+    subtitle: "Находим автомобиль по вашим критериям. Проводим полную диагностику, проверяем юридическую чистоту и историю."
+  },
+  {
+    id: 3,
+    icon: <FileText/>,
+    title: "Оформление",
+    subtitle: "Оформляем все документы, растаможиваем автомобиль. Держим вас в курсе на каждом этапе."
+  },
+  {
+    id: 4,
+    icon: <CheckCircle/>,
+    title: "Доставка и передача",
+    subtitle: "Доставляем автомобиль в ваш город, помогаем с постановкой на учёт. Вы получаете ключи и документы!"
+  },
+]
+
 export default function ServicesPage() {
+
+
   return (
     <div>
       {/* Hero Section */}
@@ -141,45 +171,41 @@ export default function ServicesPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-center mb-12">Как мы работаем</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { step: '01', title: 'Заявка', description: 'Оставляете заявку на сайте или по телефону' },
-              { step: '02', title: 'Консультация', description: 'Обсуждаем ваши требования и бюджет' },
-              { step: '03', title: 'Подбор', description: 'Находим подходящие варианты автомобилей' },
-              { step: '04', title: 'Доставка', description: 'Оформляем и доставляем авто��обиль' }
-            ].map((item, index) => (
-              <div key={index} className="text-center">
-                <div className="w-20 h-20 bg-gray-900 text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  {item.step}
-                </div>
-                <h3 className="mb-2">{item.title}</h3>
-                <p className="text-gray-600">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="bg-gray-900 text-white rounded-2xl p-12 text-center">
-            <h2 className="mb-4">Не нашли нужную услугу?</h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Свяжитесь с нами, и мы подберем индивидуальное решение под ваши потребности
+          <div className="text-center mb-16">
+            <h2 className="mb-4">Как мы работаем</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Простой и прозрачный процесс подбора автомобиля из Беларуси.
+              Мы берем на себя все заботы — от поиска до регистрации.
             </p>
-            <Link 
-              href="/contacts"
-              className="bg-[#ffd632] text-black px-8 py-3 rounded-lg hover:bg-[#e6c02d] transition-colors inline-block"
-            >
-              Связаться с нами
-            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+            <div
+                className="hidden lg:block absolute top-24 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-gray-200 to-transparent"
+                style={{top: '80px'}}></div>
+
+            {stepsData.map(item => (
+                <div key={item.id} className="relative">
+                  <div
+                      className="cursor-pointer h-100 max-h-[270px] bg-white rounded-xl p-6 border-2 border-gray-100 hover:border-[#ffd632] transition-all duration-300 hover:shadow-lg relative z-10">
+
+                    <div
+                        className="w-16 h-16 bg-[#ffd632] bg-opacity-20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                      {item.icon}
+                    </div>
+
+                    <h3 className="text-center mb-3">{item.title}</h3>
+                    <p className="text-gray-600 text-center text-sm">{item.subtitle}</p>
+                  </div>
+                </div>
+            ))}
+
           </div>
         </div>
       </section>
+      <CTA />
     </div>
   );
 }

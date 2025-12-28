@@ -212,22 +212,6 @@ export default function ContactsPage() {
             </div>
           </div>
         </section>
-
-        {/* Map Placeholder */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <h2 className="text-center mb-8">Мы на карте</h2>
-            <div className="bg-gray-300 rounded-lg overflow-hidden" style={{ height: '400px' }}>
-              <div className="w-full h-full flex items-center justify-center text-gray-600">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 mx-auto mb-4" />
-                  <p>Карта офисов</p>
-                  <p className="text-sm mt-2">Минск и Москва</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
   );
 }
