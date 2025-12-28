@@ -227,10 +227,6 @@ export default function HomePage() {
                             <div key={item.id} className="relative">
                                 <div
                                     className="cursor-pointer h-100 max-h-[270px] bg-white rounded-xl p-6 border-2 border-gray-100 hover:border-[#ffd632] transition-all duration-300 hover:shadow-lg relative z-10">
-                                    <div
-                                        className="absolute -top-4 -left-4 w-12 h-12 bg-[#ffd632] rounded-full flex items-center justify-center shadow-lg">
-                                        <span className="text-black font-medium">{item.id}</span>
-                                    </div>
 
                                     <div
                                         className="w-16 h-16 bg-[#ffd632] bg-opacity-20 rounded-full flex items-center justify-center mb-4 mx-auto">
@@ -255,7 +251,7 @@ export default function HomePage() {
                                 </div>
                                 <div>
                                     <h3 className="mb-1">Средний срок подбора</h3>
-                                    <p className="text-gray-600">От 7 до 14 дней под ключ</p>
+                                    <p className="text-gray-600">От 7 до 28 дней под ключ</p>
                                 </div>
                             </div>
                             <Link
@@ -280,7 +276,7 @@ export default function HomePage() {
                         </p>
                     </div>
 
-                    <div className="relative max-w-6xl mx-auto px-2 sm:px-0">
+                    <div className="relative max-w-7xl mx-auto px-2 sm:px-0">
                         <button
                             onClick={prevSlide}
                             className="

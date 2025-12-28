@@ -47,7 +47,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 АвтоПодбор.РФ. Все права защищены.</p>
+          <p>&copy; 2025 flowauto.ru Все права защищены.</p>
         </div>
       </div>
     </footer>
