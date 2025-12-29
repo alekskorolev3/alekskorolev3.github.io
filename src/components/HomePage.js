@@ -16,7 +16,7 @@ import {
     Truck
 } from 'lucide-react';
 import ImageWithFallback from '../components/figma/ImageWithFallback';
-import {useEffect, useState} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import CTA from "@/components/CTA";
 
 export default function HomePage() {
@@ -50,8 +50,13 @@ export default function HomePage() {
 
     const [currentSlide, setCurrentSlide] = useState(0);
     const [slidesPerView, setSlidesPerView] = useState(3);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    useLayoutEffect(() => {
         const updateSlides = () => {
             setSlidesPerView(window.innerWidth < 768 ? 1 : 3);
         };
@@ -138,6 +143,10 @@ export default function HomePage() {
     const prevSlide = () => {
         setCurrentSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
     };
+
+    if (!isMounted) {
+        return null; // Render nothing on the first server-side render
+    }
 
     return (
         <div>
