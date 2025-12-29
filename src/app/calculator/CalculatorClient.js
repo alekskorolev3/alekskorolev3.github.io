@@ -10,6 +10,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { NumericFormat } from 'react-number-format';
+import CalcTable, {data} from "@/components/CalcTable";
 
 export default function CalculatorPage() {
     const searchParams = useSearchParams();
@@ -19,7 +21,7 @@ export default function CalculatorPage() {
     const [carYear, setCarYear] = useState('');
     const [engineVolume, setEngineVolume] = useState('');
     const [horsepower, setHorsepower] = useState('');
-    const [overYearInBelarus, setOverYearInBelarus] = useState(false);
+    const [overYearInBelarus, setOverYearInBelarus] = useState(true);
     const [result, setResult] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -55,16 +57,85 @@ export default function CalculatorPage() {
         }
     }, [carPrice, carYear, engineVolume, horsepower, overYearInBelarus]);
 
+    const getCarData = (engine, hp, age) => {
+
+        // Пройдем по всем категориям и найдем подходящие параметры
+        for (const category of Object.keys(data)) {
+            if (category === "Объем 1.0 - 2.0" && engine >= 1 && engine < 2) {
+                for (const car of data[category]) {
+                    let [minHp, maxHp] = [0, 0]
+                    if (car['ЛС'].includes('более')) {
+                        [minHp, maxHp] = [500, 100000]
+                    }
+                    else {
+                        [minHp, maxHp] = car['ЛС'].split('-').map(Number);
+                    }
+
+                    if (hp >= minHp && hp <= maxHp) {
+                        let recyclingFee;
+
+                        if (age <= 3) {
+                            recyclingFee = car['С 1 января 2026 года 0-3 лет']
+                        }
+                        else if (age > 3 && age <= 5) {
+                            recyclingFee =  car['С 1 января 2026 года 3-5 лет']
+                        }
+
+                        return recyclingFee
+                    }
+                }
+            }
+            if (category === "Объем 2.0 - 3.0" && engine >= 2 && engine <= 3) {
+                for (const car of data[category]) {
+                    let [minHp, maxHp] = [0, 0]
+                    if (car['ЛС'].includes('более')) {
+                        [minHp, maxHp] = [500, 100000]
+                    }
+                    else {
+                        [minHp, maxHp] = car['ЛС'].split('-').map(Number);
+                    }
+                    // Проверяем, подходит ли текущее значение мощности и объема
+                    if (hp >= minHp && hp <= maxHp) {
+                        let recyclingFee;
+
+                        if (age <= 3) {
+                            recyclingFee = car['С 1 января 2026 года 0-3 лет']
+                        }
+                        else if (age > 3 && age <= 5) {
+                            recyclingFee =  car['С 1 января 2026 года 3-5 лет']
+                        }
+
+                        return recyclingFee
+                    }
+                }
+            }
+        }
+    };
+
     // --- Calculation function ---
     const calculateCost = useCallback(() => {
         const price = parseFloat(carPrice) || 0;
         const hp = parseFloat(horsepower) || 0;
-        const customsDuty = overYearInBelarus ? 0 : 50000;
-        const recyclingFee = hp < 160 ? 5400 : 100000;
+        const engine = parseFloat(engineVolume) || 0;
+        const currentYear = new Date().getFullYear();
+        const carAge = currentYear - parseInt(carYear);
+
+
+        console.log(getCarData(engine, hp, carAge))
+        const recyclingFee = getCarData(engine, hp, carAge)?.replaceAll(' ', '');
+
+
         const serviceCost = 30000;
-        const totalCost = price + customsDuty + recyclingFee + serviceCost;
-        setResult(totalCost);
-    }, [carPrice, horsepower, overYearInBelarus]);
+        const totalCost = parseInt(price) + parseInt(recyclingFee) + serviceCost;
+        setResult({
+            totalCost,
+            recyclingFee,
+            serviceCost,
+            price
+        });
+
+    }, [carPrice, horsepower, engineVolume, carYear, overYearInBelarus]);
+
 
     // --- Auto-calculate if URL params present ---
     useEffect(() => {
@@ -130,12 +201,14 @@ export default function CalculatorPage() {
                         <CardContent className="flex flex-col flex-1 space-y-6">
                             <div className="space-y-2">
                                 <Label htmlFor="carPrice">Стоимость авто в РБ (₽)</Label>
-                                <Input
+                                <NumericFormat
                                     id="carPrice"
-                                    type="number"
-                                    placeholder="Например: 1500000"
                                     value={carPrice}
-                                    onChange={(e) => setCarPrice(e.target.value)}
+                                    onValueChange={(values) => setCarPrice(values.value)} // Получаем отформатированное значение
+                                    thousandSeparator=" " // Используем пробел в качестве разделителя тысяч
+                                    prefix="" // Можно добавить символ валюты, например, "₽"
+                                    customInput={Input} // Используем компонент Input от Shadcn
+                                    placeholder="Например: 1 500 000"
                                 />
                             </div>
 
@@ -205,7 +278,7 @@ export default function CalculatorPage() {
                                     <div className="bg-gray-50 rounded-lg p-4 text-center">
                                         <p className="text-gray-700 mb-1">Итоговая стоимость под ключ:</p>
                                         <p className="text-black">
-                                            от {result.toLocaleString('ru-RU')} ₽
+                                            от {result.totalCost.toLocaleString('ru-RU')} ₽
                                         </p>
                                     </div>
 
@@ -214,17 +287,15 @@ export default function CalculatorPage() {
                                         <ul className="space-y-2 text-gray-700">
                                             <li className="flex items-start">
                                                 <span className="mr-2">•</span>Стоимость автомобиля в РБ
+                                                <span>&nbsp;({parseInt(result.price).toLocaleString('ru-RU')} ₽)</span>
                                             </li>
-                                            {!overYearInBelarus && (
-                                                <li className="flex items-start">
-                                                    <span className="mr-2">•</span>Таможенная пошлина
-                                                </li>
-                                            )}
                                             <li className="flex items-start">
-                                                <span className="mr-2">•</span>Утилизационный сбор ({parseFloat(horsepower) < 160 ? '5 400' : '100 000'} ₽)
+                                                <span className="mr-2">•</span>Утилизационный сбор
+                                                <span>&nbsp;({parseInt(result.recyclingFee).toLocaleString('ru-RU') } ₽)</span>
                                             </li>
                                             <li className="flex items-start">
                                                 <span className="mr-2">•</span>Стоимость услуг по подбору
+                                                <span>&nbsp;(30 000 ₽)</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -312,6 +383,8 @@ export default function CalculatorPage() {
                     </DialogContent>
                 </Dialog>
             </div>
+
+            <CalcTable />
         </div>
     );
 }
