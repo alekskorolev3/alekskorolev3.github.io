@@ -14,14 +14,13 @@ import { NumericFormat } from 'react-number-format';
 import CalcTable, {data} from "@/components/CalcTable";
 
 export default function CalculatorPage() {
-    const searchParams = useSearchParams();
-
     // --- State ---
     const [carPrice, setCarPrice] = useState('');
     const [carYear, setCarYear] = useState('');
     const [engineVolume, setEngineVolume] = useState('');
     const [horsepower, setHorsepower] = useState('');
     const [overYearInBelarus, setOverYearInBelarus] = useState(true);
+    const [isEV, setIsEV] = useState(false);
     const [result, setResult] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -30,89 +29,46 @@ export default function CalculatorPage() {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
 
-    // --- Load cached values from localStorage or URL params ---
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const urlPrice = searchParams.get('price');
-            const urlYear = searchParams.get('year');
-            const urlEngine = searchParams.get('engine');
-            const urlPower = searchParams.get('power');
 
-            setCarPrice(urlPrice || localStorage.getItem('calc_carPrice') || '');
-            setCarYear(urlYear || localStorage.getItem('calc_carYear') || '');
-            setEngineVolume(urlEngine || localStorage.getItem('calc_engineVolume') || '');
-            setHorsepower(urlPower || localStorage.getItem('calc_horsepower') || '');
-            setOverYearInBelarus(localStorage.getItem('calc_overYear') === 'true');
+    const parseHpRange = (hpString) => {
+        if (hpString.includes('более')) {
+            const min = Number(hpString.match(/\d+/)?.[0] ?? 0);
+            return [min, Infinity];
         }
-    }, [searchParams]);
 
-    // --- Cache to localStorage ---
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('calc_carPrice', carPrice);
-            localStorage.setItem('calc_carYear', carYear);
-            localStorage.setItem('calc_engineVolume', engineVolume);
-            localStorage.setItem('calc_horsepower', horsepower);
-            localStorage.setItem('calc_overYear', overYearInBelarus.toString());
-        }
-    }, [carPrice, carYear, engineVolume, horsepower, overYearInBelarus]);
-
-    const getCarData = (engine, hp, age) => {
-
-        // Пройдем по всем категориям и найдем подходящие параметры
-        for (const category of Object.keys(data)) {
-            if (category === "Объем 1.0 - 2.0" && engine >= 1 && engine < 2) {
-                for (const car of data[category]) {
-                    let [minHp, maxHp] = [0, 0]
-                    if (car['ЛС'].includes('более')) {
-                        [minHp, maxHp] = [500, 100000]
-                    }
-                    else {
-                        [minHp, maxHp] = car['ЛС'].split('-').map(Number);
-                    }
-
-                    if (hp >= minHp && hp <= maxHp) {
-                        let recyclingFee;
-
-                        if (age <= 3) {
-                            recyclingFee = car['С 1 января 2026 года 0-3 лет']
-                        }
-                        else if (age > 3 && age <= 5) {
-                            recyclingFee =  car['С 1 января 2026 года 3-5 лет']
-                        }
-
-                        return recyclingFee
-                    }
-                }
-            }
-            if (category === "Объем 2.0 - 3.0" && engine >= 2 && engine <= 3) {
-                for (const car of data[category]) {
-                    let [minHp, maxHp] = [0, 0]
-                    if (car['ЛС'].includes('более')) {
-                        [minHp, maxHp] = [500, 100000]
-                    }
-                    else {
-                        [minHp, maxHp] = car['ЛС'].split('-').map(Number);
-                    }
-                    // Проверяем, подходит ли текущее значение мощности и объема
-                    if (hp >= minHp && hp <= maxHp) {
-                        let recyclingFee;
-
-                        if (age <= 3) {
-                            recyclingFee = car['С 1 января 2026 года 0-3 лет']
-                        }
-                        else if (age > 3 && age <= 5) {
-                            recyclingFee =  car['С 1 января 2026 года 3-5 лет']
-                        }
-
-                        return recyclingFee
-                    }
-                }
-            }
-        }
+        return hpString.split('-').map(Number);
     };
 
-    // --- Calculation function ---
+    const getFeeByAge = (car, age) => {
+        return age <= 3
+            ? car['С 1 января 2026 года 0-3 лет']
+            : car['С 1 января 2026 года 3 и более лет'];
+    };
+
+    const getCategoryByEngine = (engine, isEV) => {
+        if (isEV) return 'EV и последовательные гибриды';
+        if (engine >= 0 && engine <= 1) return 'Объем 0 - 1.0';
+        if (engine > 1 && engine <= 2) return 'Объем 1.0 - 2.0';
+        if (engine > 2 && engine <= 3) return 'Объем 2.0 - 3.0';
+        return null;
+    };
+
+     const getCarData = (engine, hp, age, isEV) => {
+        const category = getCategoryByEngine(engine, isEV);
+        if (!category || !data[category]) return null;
+
+        for (const car of data[category]) {
+            const [minHp, maxHp] = parseHpRange(car['ЛС']);
+
+            if (hp >= minHp && hp <= maxHp) {
+                return getFeeByAge(car, age);
+            }
+        }
+
+        return null;
+    };
+
+
     const calculateCost = useCallback(() => {
         const price = parseFloat(carPrice) || 0;
         const hp = parseFloat(horsepower) || 0;
@@ -121,8 +77,8 @@ export default function CalculatorPage() {
         const carAge = currentYear - parseInt(carYear);
 
 
-        console.log(getCarData(engine, hp, carAge))
-        const recyclingFee = getCarData(engine, hp, carAge)?.replaceAll(' ', '');
+        console.log(getCarData(engine, hp, carAge, isEV))
+        const recyclingFee = getCarData(engine, hp, carAge, isEV)?.replaceAll(' ', '');
 
 
         const serviceCost = 30000;
@@ -134,17 +90,8 @@ export default function CalculatorPage() {
             price
         });
 
-    }, [carPrice, horsepower, engineVolume, carYear, overYearInBelarus]);
+    }, [carPrice, horsepower, engineVolume, carYear, overYearInBelarus, isEV]);
 
-
-    // --- Auto-calculate if URL params present ---
-    useEffect(() => {
-        if (carPrice && horsepower) {
-            calculateCost();
-        }
-    }, [carPrice, horsepower, calculateCost]);
-
-    // --- Form submission ---
     const handleSubmitForm = async (e) => {
         e.preventDefault();
         try {
@@ -170,6 +117,10 @@ export default function CalculatorPage() {
             toast.error('Ошибка при отправке заявки');
         }
     };
+
+    useEffect(() => {
+        calculateCost()
+    }, [carPrice, horsepower, engineVolume, carYear, overYearInBelarus, isEV])
 
     return (
         <div>
@@ -254,6 +205,17 @@ export default function CalculatorPage() {
                                 />
                                 <Label htmlFor="overYear" className="cursor-pointer">
                                     Больше года в РБ
+                                </Label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                                <Checkbox
+                                    id="isEV"
+                                    checked={isEV}
+                                    onCheckedChange={(checked) => setIsEV(checked === true)}
+                                />
+                                <Label htmlFor="isEV" className="cursor-pointer">
+                                    Электромобиль или последовательный гибрид
                                 </Label>
                             </div>
 
