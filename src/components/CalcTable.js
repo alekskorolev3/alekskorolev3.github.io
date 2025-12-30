@@ -1102,11 +1102,12 @@ function CalcTable() {
 
     const data = isCommercial ? commercialData : personalData;
     return (
-        <div className="overflow-x-auto max-w-4xl mx-auto mb-12">
-            <div className="flex justify-center gap-4 mb-6">
+        <div className="max-w-4xl mx-auto mb-12 px-4">
+            {/* переключатель */}
+            <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-6">
                 <button
                     onClick={() => setIsCommercial(false)}
-                    className={`px-4 py-2 rounded ${
+                    className={`px-4 py-2 rounded text-sm sm:text-base ${
                         !isCommercial ? 'bg-yellow-400 font-bold' : 'bg-gray-200'
                     }`}
                 >
@@ -1115,54 +1116,73 @@ function CalcTable() {
 
                 <button
                     onClick={() => setIsCommercial(true)}
-                    className={`px-4 py-2 rounded ${
+                    className={`px-4 py-2 rounded text-sm sm:text-base ${
                         isCommercial ? 'bg-yellow-400 font-bold' : 'bg-gray-200'
                     }`}
                 >
                     Коммерческий
                 </button>
             </div>
-            <table className="min-w-full table-auto border-collapse text-sm">
-                <thead>
-                <tr className="bg-yellow-400 text-center">
-                    <th className="border px-4 py-2">кВт</th>
-                    <th className="border px-4 py-2">ЛС</th>
-                    <th className="border px-4 py-2">Ставка</th>
-                    <th className="border px-4 py-2">0-3 лет</th>
-                    <th className="border px-4 py-2">Ставка 3 и более лет</th>
-                    <th className="border px-4 py-2">3 и более лет</th>
-                </tr>
-                </thead>
-                <tbody>
-                {Object.entries(data).map(([category, rows]) => (
-                    <React.Fragment key={category}>
-                        <tr>
-                            <td colSpan="6" className="bg-yellow-300 text-center font-bold py-2">{category}</td>
-                        </tr>
-                        {rows.map((row, index) => (
-                            <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
-                                <td className="border px-4 py-2">{row.кВт}</td>
-                                <td className="border px-4 py-2">{row.ЛС}</td>
-                                <td>{row[RATE]}</td>
-                                <td>{row[YOUNG]}</td>
-                                <td>{row[RATE_OLD]}</td>
-                                <td>{row[OLD]}</td>
+
+            {/* таблица */}
+            <div className="overflow-x-auto">
+                <table className="min-w-full table-auto border-collapse text-xs sm:text-sm">
+                    <thead>
+                    <tr className="bg-yellow-400 text-center">
+                        <th className="border px-2 sm:px-4 py-2">кВт</th>
+                        <th className="border px-2 sm:px-4 py-2">ЛС</th>
+                        <th className="border px-2 sm:px-4 py-2">Ставка</th>
+                        <th className="border px-2 sm:px-4 py-2">0–3 лет</th>
+                        <th className="border px-2 sm:px-4 py-2">Ставка 3+</th>
+                        <th className="border px-2 sm:px-4 py-2">3 и более лет</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {Object.entries(data).map(([category, rows]) => (
+                        <React.Fragment key={category}>
+                            <tr>
+                                <td
+                                    colSpan={6}
+                                    className="bg-yellow-300 text-center font-bold py-2 text-xs sm:text-sm"
+                                >
+                                    {category}
+                                </td>
                             </tr>
-                        ))}
-                    </React.Fragment>
-                ))}
-                </tbody>
-            </table>
+
+                            {rows.map((row, index) => (
+                                <tr
+                                    key={index}
+                                    className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}
+                                >
+                                    <td className="border px-2 sm:px-4 py-2">{row.кВт}</td>
+                                    <td className="border px-2 sm:px-4 py-2">{row.ЛС}</td>
+                                    <td className="border px-2 sm:px-4 py-2">{row[RATE]}</td>
+                                    <td className="border px-2 sm:px-4 py-2">{row[YOUNG]}</td>
+                                    <td className="border px-2 sm:px-4 py-2">{row[RATE_OLD]}</td>
+                                    <td className="border px-2 sm:px-4 py-2">{row[OLD]}</td>
+                                </tr>
+                            ))}
+                        </React.Fragment>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
+
             <div className="mt-4">
                 <Button variant="link" asChild className="px-0">
                     <a
                         href="/Постановление Правительства РФ от 26.12.2013 № 1291 Об утилизационном сборе.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2"
+                        className="flex items-start gap-2 text-sm"
                     >
-                        <FileText className="h-4 w-4"/>
-                        Постановление Правительства РФ от 26.12.2013 № 1291 Об утилизационном сборе
+                        <FileText className="h-4 w-4 mt-0.5 shrink-0"/>
+                        <span>
+                          Постановление Правительства РФ
+                          <br className="sm:hidden"/>
+                          «Об утилизационном сборе»
+                        </span>
                     </a>
                 </Button>
             </div>
