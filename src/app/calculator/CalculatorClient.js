@@ -129,13 +129,16 @@ export default function CalculatorPage() {
             <section className="relative bg-white py-20 overflow-hidden border-b border-gray-200">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-0 w-72 h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"></div>
-                <div className="container mx-auto px-4 relative z-10">
+                <div className="container flex row gap-6 mx-auto px-4 relative z-10 max-w-4xl">
+                    <img
+                        className="max-h-[110px]"
+                        src="/calculator.webp" alt="Калькулятор утилизационного сбора"/>
                     <div className="max-w-3xl">
                         <h1 className="mb-6 text-[rgb(60,60,60)] text-[20px] font-bold">
-                            Калькулятор стоимости подбора
+                            Калькулятор стоимости автомобиля
                         </h1>
                         <p className="text-xl text-gray-600">
-                            Рассчитайте примерную стоимость подбора вашего автомобиля из Беларуси в Россию с учетом всех расходов.
+                            Рассчитайте примерную стоимость подбора вашего автомобиля из Беларуси в Россию с учетом утильсбора.
                         </p>
                     </div>
                 </div>
