@@ -18,6 +18,8 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Info, FileText } from "lucide-react"
+import {useIsMobile} from "@/hooks/useIsMobile";
+import {cn} from "@/lib/utils";
 
 export default function CalculatorPage() {
     const [carPrice, setCarPrice] = useState('');
@@ -33,6 +35,11 @@ export default function CalculatorPage() {
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+
+    const [tooltipOpen, setTooltipOpen] = useState(false)
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const isMobile = useIsMobile();
+    const [mobileView, setMobileView] = useState('form');
 
 
     const parseHpRange = (hpString) => {
@@ -60,7 +67,7 @@ export default function CalculatorPage() {
         return null;
     };
 
-     const getCarData = (engine, hp, age, isEV, overYearInBelarus) => {
+    const getCarData = (engine, hp, age, isEV, overYearInBelarus) => {
 
         const data = overYearInBelarus ? personalData : commercialData
         const category = getCategoryByEngine(engine, isEV);
@@ -77,7 +84,6 @@ export default function CalculatorPage() {
 
         return null;
     };
-
 
     const calculateCost = useCallback(() => {
         const price = parseFloat(carPrice) || 0;
@@ -127,9 +133,11 @@ export default function CalculatorPage() {
         }
     };
 
-    // useEffect(() => {
-    //     calculateCost()
-    // }, [carPrice, horsepower, engineVolume, carYear, overYearInBelarus, isEV])
+    const isFormValid =
+        carPrice &&
+        carYear &&
+        horsepower &&
+        (isEV || engineVolume);
 
     return (
         <div>
@@ -162,223 +170,520 @@ export default function CalculatorPage() {
                 </div>
             </section>
 
-            <div className="container mx-auto px-4 py-12">
+            <div className="container mx-auto px-4 py-4 md:py-12">
                 <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-                    <Card className="flex flex-col">
-                        <CardHeader className="px-4 md:px-6">
-                            <CardTitle className="text-base md:text-lg">
-                                Данные автомобиля
-                            </CardTitle>
-                            <CardDescription className="text-sm md:text-base">
-                                Заполните информацию для расчета стоимости
-                            </CardDescription>
-                        </CardHeader>
-
-                        <CardContent className="flex flex-col flex-1 space-y-5 md:space-y-6 px-4 md:px-6">
-                            {/* цена */}
-                            <div className="space-y-2">
-                                <Label htmlFor="carPrice" className="text-sm md:text-base">
-                                    Стоимость авто в РБ (₽)
-                                </Label>
-                                <NumericFormat
-                                    id="carPrice"
-                                    value={carPrice}
-                                    onValueChange={(values) => setCarPrice(values.value)}
-                                    thousandSeparator=" "
-                                    customInput={Input}
-                                    placeholder="Например: 1 500 000"
-                                    className="text-base"
-                                />
-                            </div>
-
-                            {/* год */}
-                            <div className="space-y-2">
-                                <Label htmlFor="carYear" className="text-sm md:text-base">
-                                    Год автомобиля
-                                </Label>
-                                <Input
-                                    id="carYear"
-                                    type="number"
-                                    placeholder="Например: 2020"
-                                    value={carYear}
-                                    max={2026}
-                                    min={1980}
-                                    onChange={(e) => setCarYear(e.target.value)}
-                                    className="text-base"
-                                />
-                            </div>
-
-                            {/* объем */}
-                            <div className="space-y-2">
-                                <Label htmlFor="engineVolume" className="text-sm md:text-base">
-                                    Объем двигателя (см³)
-                                </Label>
-                                <Input
-                                    id="engineVolume"
-                                    type="number"
-                                    placeholder="Например: 2000"
-                                    value={engineVolume}
-                                    min={0}
-                                    max={10000}
-                                    onChange={(e) => setEngineVolume(e.target.value)}
-                                    className="text-base"
-                                />
-                            </div>
-
-                            {/* л.с. */}
-                            <div className="space-y-2">
-                                <Label htmlFor="horsepower" className="text-sm md:text-base">
-                                    Количество л.с.
-                                </Label>
-                                <Input
-                                    id="horsepower"
-                                    type="number"
-                                    placeholder="Например: 150"
-                                    min={0}
-                                    max={5000}
-                                    value={horsepower}
-                                    onChange={(e) => setHorsepower(e.target.value)}
-                                    className="text-base"
-                                />
-                            </div>
-
-                            {/* чекбокс с тултипом */}
-                            <div className="flex items-start gap-2">
-                                <Checkbox
-                                    id="overYear"
-                                    checked={overYearInBelarus}
-                                    onCheckedChange={(checked) => setOverYearInBelarus(checked === true)}
-                                    className="mt-1"
-                                />
-
-                                <Label
-                                    htmlFor="overYear"
-                                    className="cursor-pointer text-sm md:text-base leading-snug"
-                                >
-                                    Больше года в РБ
-                                </Label>
-
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Info className="h-4 w-4 text-muted-foreground cursor-pointer mt-1 shrink-0" />
-                                        </TooltipTrigger>
-                                        <TooltipContent className="max-w-xs">
-                                            <p className="text-sm">
-                                                Автомобиль находился на территории Республики Беларусь более 1 года
-                                                до ввоза в РФ
-                                            </p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                            </div>
-
-                            {/* электромобиль */}
-                            <div className="flex items-start gap-2">
-                                <Checkbox
-                                    id="isEV"
-                                    checked={isEV}
-                                    onCheckedChange={(checked) => setIsEV(checked === true)}
-                                    className="mt-1"
-                                />
-                                <Label
-                                    htmlFor="isEV"
-                                    className="cursor-pointer text-sm md:text-base leading-snug"
-                                >
-                                    Электромобиль или последовательный гибрид
-                                </Label>
-                            </div>
-
-                            {/* кнопка */}
-                            <Button
-                                onClick={calculateCost}
-                                className="w-full bg-[#ffd632] text-black hover:bg-[#e6c02d] mt-auto text-sm md:text-base"
+                    {isMobile ? (
+                        <div className="relative perspective-1000 min-h-[625px]" style={{ perspective: '1000px' }}>
+                            <div
+                                className="relative transition-transform duration-500"
+                                style={{
+                                    transformStyle: 'preserve-3d',
+                                    transform: mobileView === 'result' ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                                }}
                             >
-                                Рассчитать стоимость
-                            </Button>
-                        </CardContent>
-                    </Card>
+                                {/* FRONT — форма */}
+                                <div className="absolute inset-0"
+                                     style={{
+                                         backfaceVisibility: 'hidden',
+                                         transform: 'rotateY(0deg)',
+                                     }}>
+                                    <Card className="flex flex-col">
+                                        <CardHeader className="px-4 md:px-6">
+                                            <CardTitle className="text-base md:text-lg">
+                                                Данные автомобиля
+                                            </CardTitle>
+                                            <CardDescription className="text-sm md:text-base">
+                                                Заполните информацию для расчета стоимости
+                                            </CardDescription>
+                                        </CardHeader>
 
-                    <Card className="flex flex-col">
-                        <CardHeader className="px-4 md:px-6">
-                            <CardTitle className="text-base md:text-lg">
-                                Результат расчета
-                            </CardTitle>
-                            <CardDescription className="text-sm md:text-base">
-                                Примерная стоимость подбора автомобиля
-                            </CardDescription>
-                        </CardHeader>
+                                        <CardContent className="flex flex-col flex-1 space-y-5 md:space-y-6 px-4 md:px-6">
+                                            {/* цена */}
+                                            <div className="space-y-2">
+                                                <Label htmlFor="carPrice" className="text-sm md:text-base">
+                                                    Стоимость авто в РБ (₽)
+                                                </Label>
+                                                <NumericFormat
+                                                    id="carPrice"
+                                                    value={carPrice}
+                                                    onValueChange={(values) => setCarPrice(values.value)}
+                                                    thousandSeparator=" "
+                                                    customInput={Input}
+                                                    placeholder="Например: 1 500 000"
+                                                    className="text-base"
+                                                    required
+                                                />
+                                            </div>
 
-                        <CardContent className="flex flex-col flex-1 px-4 md:px-6">
-                            {result !== null ? (
-                                <div className="flex flex-col flex-1 space-y-5 md:space-y-6">
-                                    {/* итог */}
-                                    <div className="bg-gray-50 rounded-lg p-4 text-center">
-                                        <p className="text-sm md:text-base text-gray-700 mb-1">
-                                            Итоговая стоимость под ключ:
-                                        </p>
-                                        <p className="text-lg md:text-xl font-semibold text-black">
-                                            от {result.totalCost.toLocaleString('ru-RU')} ₽
-                                        </p>
-                                    </div>
+                                            {/* год */}
+                                            <div className="space-y-2">
+                                                <Label htmlFor="carYear" className="text-sm md:text-base">
+                                                    Год автомобиля
+                                                </Label>
+                                                <Input
+                                                    id="carYear"
+                                                    type="number"
+                                                    placeholder="Например: 2020"
+                                                    value={carYear}
+                                                    max={2026}
+                                                    min={1980}
+                                                    onChange={(e) => setCarYear(e.target.value)}
+                                                    className="text-base"
+                                                    required
+                                                />
+                                            </div>
 
-                                    {/* состав стоимости */}
-                                    <div className="space-y-3">
-                                        <h3 className="text-sm md:text-base font-medium text-black">
-                                            Что входит в стоимость:
-                                        </h3>
+                                            {/* объем */}
+                                            <div className="space-y-2">
+                                                <Label htmlFor="engineVolume" className="text-sm md:text-base">
+                                                    Объем двигателя (см³)
+                                                </Label>
+                                                <Input
+                                                    id="engineVolume"
+                                                    type="number"
+                                                    placeholder="Например: 2000"
+                                                    value={engineVolume}
+                                                    min={0}
+                                                    max={10000}
+                                                    disabled={isEV}
+                                                    onChange={(e) => setEngineVolume(isEV ? 0 : e.target.value)}
+                                                    className="text-base"
+                                                />
+                                            </div>
 
-                                        <ul className="space-y-2 text-sm md:text-base text-gray-700">
-                                            <li className="flex items-start">
-                                                <span className="mr-2">•</span>
-                                                <span>
+                                            {/* л.с. */}
+                                            <div className="space-y-2">
+                                                <Label htmlFor="horsepower" className="text-sm md:text-base">
+                                                    Количество л.с.
+                                                </Label>
+                                                <Input
+                                                    id="horsepower"
+                                                    type="number"
+                                                    placeholder="Например: 150"
+                                                    min={0}
+                                                    max={5000}
+                                                    value={horsepower}
+                                                    onChange={(e) => setHorsepower(e.target.value)}
+                                                    className="text-base"
+                                                />
+                                            </div>
+
+                                            <div className="flex gap-2 items-center">
+                                                <Checkbox
+                                                    id="overYear"
+                                                    checked={overYearInBelarus}
+                                                    onCheckedChange={(checked) => setOverYearInBelarus(checked === true)}
+                                                    className="mt-0.5 h-5 w-5 md:h-4 md:w-4"
+                                                />
+
+                                                <Label
+                                                    htmlFor="overYear"
+                                                    className="cursor-pointer text-sm md:text-base leading-snug"
+                                                >
+                                                    Больше года в РБ
+                                                </Label>
+
+                                                <TooltipProvider delayDuration={0}>
+                                                    <Tooltip open={tooltipOpen} onOpenChange={setTooltipOpen}>
+                                                        <TooltipTrigger asChild>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setTooltipOpen((v) => !v)}
+                                                                className="mt-0.5 shrink-0"
+                                                            >
+                                                                <Info className="h-4 w-4 text-muted-foreground" />
+                                                            </button>
+                                                        </TooltipTrigger>
+
+                                                        <TooltipContent className="max-w-xs">
+                                                            <p className="text-sm">
+                                                                Автомобиль находился на территории Республики Беларусь более 1 года
+                                                                до ввоза в РФ
+                                                            </p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+                                            </div>
+
+
+                                            <div className="flex items-start gap-2">
+                                                <Checkbox
+                                                    id="isEV"
+                                                    checked={isEV}
+                                                    onCheckedChange={(checked) => setIsEV(checked === true)}
+                                                    className="mt-1 h-5 w-5 md:h-4 md:w-4"
+                                                />
+                                                <Label
+                                                    htmlFor="isEV"
+                                                    className="cursor-pointer text-sm md:text-base leading-snug"
+                                                >
+                                                    Электромобиль или последовательный гибрид
+                                                </Label>
+                                            </div>
+
+                                            <Button
+                                                disabled={!isFormValid}
+                                                onClick={() => {
+                                                    setIsSubmitted(true);
+                                                    if (!isFormValid) return;
+
+                                                    calculateCost();
+                                                    if (isMobile) {
+                                                        setMobileView('result');
+                                                    }
+                                                }}
+                                                className="w-full bg-[#ffd632] text-black hover:bg-[#e6c02d] mt-auto"
+                                            >
+                                                Рассчитать стоимость
+                                            </Button>
+                                        </CardContent>
+                                    </Card>
+                                </div>
+
+                                {/* BACK — результат */}
+                                <div className="absolute inset-0"
+                                     style={{
+                                         backfaceVisibility: 'hidden',
+                                         transform: 'rotateY(180deg)',
+                                     }}>
+                                    <Card className="flex flex-col">
+                                        <CardHeader className="px-4 md:px-6">
+                                            <CardTitle className="text-base md:text-lg">
+                                                Результат расчета
+                                            </CardTitle>
+                                            <CardDescription className="text-sm md:text-base">
+                                                Примерная стоимость подбора автомобиля
+                                            </CardDescription>
+                                        </CardHeader>
+
+                                        <CardContent className="flex flex-col flex-1 px-4 md:px-6">
+                                            {result !== null ? (
+                                                <div className="flex flex-col flex-1 space-y-5 md:space-y-6">
+                                                    {/* итог */}
+                                                    <div className="bg-gray-50 rounded-lg p-4 text-center">
+                                                        <p className="text-sm md:text-base text-gray-700 mb-1">
+                                                            Итоговая стоимость под ключ:
+                                                        </p>
+                                                        <p className="text-lg md:text-xl font-semibold text-black">
+                                                            от {result.totalCost.toLocaleString('ru-RU')} ₽
+                                                        </p>
+                                                    </div>
+
+                                                    {/* состав стоимости */}
+                                                    <div className="space-y-3">
+                                                        <h3 className="text-sm md:text-base font-medium text-black">
+                                                            Что входит в стоимость:
+                                                        </h3>
+
+                                                        <ul className="space-y-2 text-sm md:text-base text-gray-700">
+                                                            <li className="flex items-start">
+                                                                <span className="mr-2">•</span>
+                                                                <span>
                 Стоимость автомобиля в РБ (
-                                                    {parseInt(result.price).toLocaleString('ru-RU')} ₽)
+                                                                    {parseInt(result.price).toLocaleString('ru-RU')} ₽)
               </span>
-                                            </li>
+                                                            </li>
 
-                                            <li className="flex items-start">
-                                                <span className="mr-2">•</span>
-                                                <span>
+                                                            <li className="flex items-start">
+                                                                <span className="mr-2">•</span>
+                                                                <span>
                 Утилизационный сбор (
-                                                    {parseInt(result.recyclingFee).toLocaleString('ru-RU')} ₽)
+                                                                    {parseInt(result.recyclingFee).toLocaleString('ru-RU')} ₽)
               </span>
-                                            </li>
+                                                            </li>
 
-                                            <li className="flex items-start">
-                                                <span className="mr-2">•</span>
-                                                <span>Стоимость услуг по подбору (30 000 ₽)</span>
-                                            </li>
-                                        </ul>
+                                                            <li className="flex items-start">
+                                                                <span className="mr-2">•</span>
+                                                                <span>Стоимость услуг по подбору (30 000 ₽)</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                    {/* предупреждение */}
+                                                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                                        <p className="text-sm md:text-base text-gray-700">
+                                                            Это предварительный расчет. Для получения точной стоимости свяжитесь
+                                                            с нашим менеджером.
+                                                        </p>
+                                                    </div>
+
+                                                    {isMobile && (
+                                                        <Button
+                                                            variant="outline"
+                                                            onClick={() => setMobileView('form')}
+                                                            className="w-full mt-2"
+                                                        >
+                                                            ← Изменить данные
+                                                        </Button>
+                                                    )}
+
+                                                    {/* кнопка */}
+                                                    <Button
+                                                        onClick={() => setIsDialogOpen(true)}
+                                                        className="w-full bg-[#ffd632] text-black hover:bg-[#e6c02d] mt-auto text-sm md:text-base"
+                                                    >
+                                                        Получить расчет
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <div className="text-center py-10 md:py-12 text-gray-500 text-sm md:text-base">
+                                                    <p>
+                                                        Заполните данные автомобиля и нажмите кнопку
+                                                        <br className="md:hidden" />
+                                                        «Рассчитать стоимость»
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <Card className="flex flex-col">
+                                <CardHeader className="px-4 md:px-6">
+                                    <CardTitle className="text-base md:text-lg">
+                                        Данные автомобиля
+                                    </CardTitle>
+                                    <CardDescription className="text-sm md:text-base">
+                                        Заполните информацию для расчета стоимости
+                                    </CardDescription>
+                                </CardHeader>
+
+                                <CardContent className="flex flex-col flex-1 space-y-5 md:space-y-6 px-4 md:px-6">
+                                    {/* цена */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="carPrice" className="text-sm md:text-base">
+                                            Стоимость авто в РБ (₽)
+                                        </Label>
+                                        <NumericFormat
+                                            id="carPrice"
+                                            value={carPrice}
+                                            onValueChange={(values) => setCarPrice(values.value)}
+                                            thousandSeparator=" "
+                                            customInput={Input}
+                                            placeholder="Например: 1 500 000"
+                                            className={cn(
+                                                "text-base",
+                                                isSubmitted && !carPrice && "border-red-500 focus-visible:ring-red-500"
+                                            )}
+                                        />
                                     </div>
 
-                                    {/* предупреждение */}
-                                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                                        <p className="text-sm md:text-base text-gray-700">
-                                            Это предварительный расчет. Для получения точной стоимости свяжитесь
-                                            с нашим менеджером.
-                                        </p>
+                                    {/* год */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="carYear" className="text-sm md:text-base">
+                                            Год автомобиля
+                                        </Label>
+                                        <Input
+                                            id="carYear"
+                                            type="number"
+                                            placeholder="Например: 2020"
+                                            value={carYear}
+                                            max={2026}
+                                            min={1980}
+                                            onChange={(e) => setCarYear(e.target.value)}
+                                            className={cn(
+                                                "text-base",
+                                                isSubmitted && !carYear && "border-red-500 focus-visible:ring-red-500"
+                                            )}
+                                        />
                                     </div>
 
-                                    {/* кнопка */}
+                                    {/* объем */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="engineVolume" className="text-sm md:text-base">
+                                            Объем двигателя (см³)
+                                        </Label>
+                                        <Input
+                                            id="engineVolume"
+                                            type="number"
+                                            placeholder="Например: 2000"
+                                            value={engineVolume}
+                                            min={0}
+                                            max={10000}
+                                            onChange={(e) => setEngineVolume(isEV ? 0 : e.target.value)}
+                                            className={cn(
+                                                "text-base",
+                                                isSubmitted && !engineVolume && "border-red-500 focus-visible:ring-red-500"
+                                            )}
+                                            disabled={isEV}
+                                        />
+                                    </div>
+
+                                    {/* л.с. */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="horsepower" className="text-sm md:text-base">
+                                            Количество л.с.
+                                        </Label>
+                                        <Input
+                                            id="horsepower"
+                                            type="number"
+                                            placeholder="Например: 150"
+                                            min={0}
+                                            max={5000}
+                                            value={horsepower}
+                                            onChange={(e) => setHorsepower(e.target.value)}
+                                            className={cn(
+                                                "text-base",
+                                                isSubmitted && !horsepower && "border-red-500 focus-visible:ring-red-500"
+                                            )}
+                                        />
+                                    </div>
+
+                                    <div className="flex gap-2 items-center">
+                                        <Checkbox
+                                            id="overYear"
+                                            checked={overYearInBelarus}
+                                            onCheckedChange={(checked) => setOverYearInBelarus(checked === true)}
+                                            className="mt-0.5 h-5 w-5 md:h-4 md:w-4"
+                                        />
+
+                                        <Label
+                                            htmlFor="overYear"
+                                            className="cursor-pointer text-sm md:text-base leading-snug"
+                                        >
+                                            Больше года в РБ
+                                        </Label>
+
+                                        <TooltipProvider delayDuration={0}>
+                                            <Tooltip open={tooltipOpen} onOpenChange={setTooltipOpen}>
+                                                <TooltipTrigger asChild>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setTooltipOpen((v) => !v)}
+                                                        className="mt-0.5 shrink-0"
+                                                    >
+                                                        <Info className="h-4 w-4 text-muted-foreground" />
+                                                    </button>
+                                                </TooltipTrigger>
+
+                                                <TooltipContent className="max-w-xs">
+                                                    <p className="text-sm">
+                                                        Автомобиль находился на территории Республики Беларусь более 1 года
+                                                        до ввоза в РФ
+                                                    </p>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
+                                    </div>
+
+
+                                    <div className="flex items-start gap-2">
+                                        <Checkbox
+                                            id="isEV"
+                                            checked={isEV}
+                                            onCheckedChange={(checked) => setIsEV(checked === true)}
+                                            className="mt-1 h-5 w-5 md:h-4 md:w-4"
+                                        />
+                                        <Label
+                                            htmlFor="isEV"
+                                            className="cursor-pointer text-sm md:text-base leading-snug"
+                                        >
+                                            Электромобиль или последовательный гибрид
+                                        </Label>
+                                    </div>
+
                                     <Button
-                                        onClick={() => setIsDialogOpen(true)}
-                                        className="w-full bg-[#ffd632] text-black hover:bg-[#e6c02d] mt-auto text-sm md:text-base"
+                                        disabled={!isFormValid}
+                                        onClick={() => {
+                                            setIsSubmitted(true);
+                                            if (!isFormValid) return;
+
+                                            calculateCost();
+                                            if (isMobile) {
+                                                setMobileView('result');
+                                            }
+                                        }}
+                                        className="w-full bg-[#ffd632] text-black hover:bg-[#e6c02d] mt-auto"
                                     >
-                                        Получить расчет
+                                        Рассчитать стоимость
                                     </Button>
-                                </div>
-                            ) : (
-                                <div className="text-center py-10 md:py-12 text-gray-500 text-sm md:text-base">
-                                    <p>
-                                        Заполните данные автомобиля и нажмите кнопку
-                                        <br className="md:hidden" />
-                                        «Рассчитать стоимость»
-                                    </p>
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
+                                </CardContent>
+                            </Card>
+                            <Card className="flex flex-col">
+                                <CardHeader className="px-4 md:px-6">
+                                    <CardTitle className="text-base md:text-lg">
+                                        Результат расчета
+                                    </CardTitle>
+                                    <CardDescription className="text-sm md:text-base">
+                                        Примерная стоимость подбора автомобиля
+                                    </CardDescription>
+                                </CardHeader>
+
+                                <CardContent className="flex flex-col flex-1 px-4 md:px-6">
+                                    {result !== null ? (
+                                        <div className="flex flex-col flex-1 space-y-5 md:space-y-6">
+                                            {/* итог */}
+                                            <div className="bg-gray-50 rounded-lg p-4 text-center">
+                                                <p className="text-sm md:text-base text-gray-700 mb-1">
+                                                    Итоговая стоимость под ключ:
+                                                </p>
+                                                <p className="text-lg md:text-xl font-semibold text-black">
+                                                    от {result.totalCost.toLocaleString('ru-RU')} ₽
+                                                </p>
+                                            </div>
+
+                                            {/* состав стоимости */}
+                                            <div className="space-y-3">
+                                                <h3 className="text-sm md:text-base font-medium text-black">
+                                                    Что входит в стоимость:
+                                                </h3>
+
+                                                <ul className="space-y-2 text-sm md:text-base text-gray-700">
+                                                    <li className="flex items-start">
+                                                        <span className="mr-2">•</span>
+                                                        <span>
+                Стоимость автомобиля в РБ (
+                                                            {parseInt(result.price).toLocaleString('ru-RU')} ₽)
+              </span>
+                                                    </li>
+
+                                                    <li className="flex items-start">
+                                                        <span className="mr-2">•</span>
+                                                        <span>
+                Утилизационный сбор (
+                                                            {parseInt(result.recyclingFee).toLocaleString('ru-RU')} ₽)
+              </span>
+                                                    </li>
+
+                                                    <li className="flex items-start">
+                                                        <span className="mr-2">•</span>
+                                                        <span>Стоимость услуг по подбору (30 000 ₽)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            {/* предупреждение */}
+                                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                                <p className="text-sm md:text-base text-gray-700">
+                                                    Это предварительный расчет. Для получения точной стоимости свяжитесь
+                                                    с нашим менеджером.
+                                                </p>
+                                            </div>
+
+                                            {/* кнопка */}
+                                            <Button
+                                                onClick={() => setIsDialogOpen(true)}
+                                                className="w-full bg-[#ffd632] text-black hover:bg-[#e6c02d] mt-auto text-base md:text-sm"
+                                            >
+                                                Получить полный расчет
+                                            </Button>
+                                        </div>
+                                    ) : (
+                                        <div className="text-center py-10 md:py-12 text-gray-500 text-sm md:text-base">
+                                            <p>
+                                                Заполните данные автомобиля и нажмите кнопку&nbsp;
+                                                <br className="md:hidden" />
+                                                «Рассчитать стоимость»
+                                            </p>
+                                        </div>
+                                    )}
+                                </CardContent>
+                            </Card>
+                        </>
+                    )}
                 </div>
 
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
