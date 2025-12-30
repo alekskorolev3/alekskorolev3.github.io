@@ -1179,7 +1179,7 @@ function CalcTable() {
                     >
                         <FileText className="h-4 w-4 mt-0.5 shrink-0"/>
                         <span>
-                          Постановление Правительства РФ
+                          Постановление Правительства РФ&nbsp;
                           <br className="sm:hidden"/>
                           «Об утилизационном сборе»
                         </span>

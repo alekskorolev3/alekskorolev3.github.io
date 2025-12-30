@@ -1,7 +1,13 @@
+'use client';
 import {ArrowRight, Car, Clock, DollarSign, Shield} from "lucide-react";
 import Link from "next/link";
+import {Button} from "@/components/ui/button";
+import {CTAForm} from "@/components/CTAForm";
+import {useState} from "react";
 
 export default function CTA() {
+
+    const [open, setIsOpen] = useState(false)
 
     return (
         <section className="py-20 bg-gray-50 relative overflow-hidden">
@@ -23,11 +29,12 @@ export default function CTA() {
                             Оставьте заявку, и наши специалисты свяжутся с вами в течение часа
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                            <Link href="/contacts"
-                                  className="bg-[#ffd632] text-black px-10 py-4 rounded-lg hover:bg-[#e6c02d] transition-all hover:scale-105 inline-flex items-center justify-center gap-2 shadow-lg">
+                            <div
+                                onClick={() => setIsOpen(true)}
+                                className="cursor-pointer bg-[#ffd632] text-black px-10 py-4 rounded-lg hover:bg-[#e6c02d] transition-all hover:scale-105 inline-flex items-center justify-center gap-2 shadow-lg">
                                 Оставить заявку
                                 <ArrowRight className="w-5 h-5"/>
-                            </Link>
+                            </div>
                             <Link href="/calculator"
                                   className="bg-white border-2 border-black text-black px-12 py-4 rounded-lg hover:bg-black hover:text-white transition-all inline-flex items-center justify-center gap-2">
                                 Рассчитать стоимость
@@ -62,6 +69,7 @@ export default function CTA() {
                     </p>
                 </div>
             </div>
+            <CTAForm open={open} onOpenChange={setIsOpen} />
         </section>
     )
 }

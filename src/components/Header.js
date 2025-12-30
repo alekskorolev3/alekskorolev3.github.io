@@ -63,7 +63,7 @@ const Header = () => {
             </Link>
 
             {/* DESKTOP NAV */}
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-8">
               <NavLink href="/services" active={isActive('/services')}>
                 Услуги
               </NavLink>
@@ -84,7 +84,7 @@ const Header = () => {
             {/* DESKTOP BUTTON */}
             <Link
                 href="/contacts"
-                className="hidden md:inline-flex bg-[#ffd632] text-black px-6 py-2 rounded-lg hover:bg-[#e6c02d] transition-colors"
+                className="hidden lg:inline-flex bg-[#ffd632] text-black px-6 py-2 rounded-lg hover:bg-[#e6c02d] transition-colors"
             >
               Связаться
             </Link>
@@ -92,7 +92,7 @@ const Header = () => {
             {/* BURGER */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="md:hidden p-2"
+                className="lg:hidden p-2"
                 aria-label="Open menu"
             >
               <Menu className="w-7 h-7" />
