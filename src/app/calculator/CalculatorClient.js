@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -11,10 +10,16 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { NumericFormat } from 'react-number-format';
-import CalcTable, {data} from "@/components/CalcTable";
+import CalcTable, {commercialData, personalData} from "@/components/CalcTable";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Info } from "lucide-react"
 
 export default function CalculatorPage() {
-    // --- State ---
     const [carPrice, setCarPrice] = useState('');
     const [carYear, setCarYear] = useState('');
     const [engineVolume, setEngineVolume] = useState('');
@@ -50,10 +55,14 @@ export default function CalculatorPage() {
         if (engine >= 0 && engine <= 1000) return 'Объем 0 - 1.0';
         if (engine > 1000 && engine <= 2000) return 'Объем 1.0 - 2.0';
         if (engine > 2000 && engine <= 3000) return 'Объем 2.0 - 3.0';
+        if (engine > 3000 && engine <= 3500) return 'Объем 3.0 - 3.5';
+        if (engine > 3500) return 'Объем свыше 3.5';
         return null;
     };
 
-     const getCarData = (engine, hp, age, isEV) => {
+     const getCarData = (engine, hp, age, isEV, overYearInBelarus) => {
+
+        const data = overYearInBelarus ? personalData : commercialData
         const category = getCategoryByEngine(engine, isEV);
         if (!category || !data[category]) return null;
 
@@ -78,8 +87,7 @@ export default function CalculatorPage() {
         const carAge = currentYear - parseInt(carYear);
 
 
-        console.log(getCarData(engine, hp, carAge, isEV))
-        const recyclingFee = getCarData(engine, hp, carAge, isEV)?.replaceAll(' ', '');
+        const recyclingFee = getCarData(engine, hp, carAge, isEV, overYearInBelarus)?.replaceAll(' ', '');
 
 
         const serviceCost = 30000;
@@ -199,6 +207,8 @@ export default function CalculatorPage() {
                                     id="horsepower"
                                     type="number"
                                     placeholder="Например: 150"
+                                    min={0}
+                                    max={5000}
                                     value={horsepower}
                                     onChange={(e) => setHorsepower(e.target.value)}
                                 />
@@ -210,9 +220,24 @@ export default function CalculatorPage() {
                                     checked={overYearInBelarus}
                                     onCheckedChange={(checked) => setOverYearInBelarus(checked === true)}
                                 />
+
                                 <Label htmlFor="overYear" className="cursor-pointer">
                                     Больше года в РБ
                                 </Label>
+
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <Info className="h-4 w-4 text-muted-foreground cursor-pointer"/>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p className="max-w-xs text-sm">
+                                                Автомобиль находился на территории Республики Беларусь более 1 года
+                                                до ввоза в РФ
+                                            </p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
                             </div>
 
                             <div className="flex items-center space-x-2">
