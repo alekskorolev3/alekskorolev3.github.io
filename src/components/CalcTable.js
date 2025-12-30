@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {Button} from "@/components/ui/button";
+import {FileText} from "lucide-react";
 
 export const personalData = {
     "EV и последовательные гибриды": [
@@ -1151,6 +1153,19 @@ function CalcTable() {
                 ))}
                 </tbody>
             </table>
+            <div className="mt-4">
+                <Button variant="link" asChild className="px-0">
+                    <a
+                        href="/Постановление Правительства РФ от 26.12.2013 № 1291 Об утилизационном сборе.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2"
+                    >
+                        <FileText className="h-4 w-4"/>
+                        Постановление Правительства РФ от 26.12.2013 № 1291 Об утилизационном сборе
+                    </a>
+                </Button>
+            </div>
         </div>
     );
 }

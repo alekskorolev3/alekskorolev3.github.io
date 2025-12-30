@@ -17,7 +17,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Info } from "lucide-react"
+import { Info, FileText } from "lucide-react"
 
 export default function CalculatorPage() {
     const [carPrice, setCarPrice] = useState('');
@@ -135,8 +135,10 @@ export default function CalculatorPage() {
         <div>
             {/* Hero Section */}
             <section className="relative bg-white py-20 overflow-hidden border-b border-gray-200">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-72 h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"></div>
+                <div
+                    className="absolute top-0 right-0 w-96 h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"></div>
+                <div
+                    className="absolute bottom-0 left-0 w-72 h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"></div>
                 <div className="container flex row gap-6 mx-auto px-4 relative z-10 max-w-4xl">
                     <img
                         className="max-h-[110px]"
@@ -146,7 +148,8 @@ export default function CalculatorPage() {
                             Калькулятор стоимости автомобиля
                         </h1>
                         <p className="text-xl text-gray-600">
-                            Рассчитайте примерную стоимость подбора вашего автомобиля из Беларуси в Россию с учетом утильсбора.
+                            Рассчитайте примерную стоимость подбора вашего автомобиля из Беларуси в Россию с учетом
+                            утильсбора.
                         </p>
                     </div>
                 </div>
@@ -285,7 +288,7 @@ export default function CalculatorPage() {
                                             </li>
                                             <li className="flex items-start">
                                                 <span className="mr-2">•</span>Утилизационный сбор
-                                                <span>&nbsp;({parseInt(result.recyclingFee).toLocaleString('ru-RU') } ₽)</span>
+                                                <span>&nbsp;({parseInt(result.recyclingFee).toLocaleString('ru-RU')} ₽)</span>
                                             </li>
                                             <li className="flex items-start">
                                                 <span className="mr-2">•</span>Стоимость услуг по подбору
@@ -296,7 +299,8 @@ export default function CalculatorPage() {
 
                                     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                                         <p className="text-gray-700">
-                                            Это предварительный расчет. Для получения точной стоимости свяжитесь с нашим менеджером.
+                                            Это предварительный расчет. Для получения точной стоимости свяжитесь с нашим
+                                            менеджером.
                                         </p>
                                     </div>
 
@@ -378,7 +382,7 @@ export default function CalculatorPage() {
                 </Dialog>
             </div>
 
-            <CalcTable />
+            <CalcTable/>
         </div>
     );
 }
