@@ -187,7 +187,7 @@ export default function CalculatorPage() {
                                     thousandSeparator=" "
                                     customInput={Input}
                                     placeholder="Например: 1 500 000"
-                                    className="text-sm md:text-base"
+                                    className="text-base"
                                 />
                             </div>
 
@@ -204,7 +204,7 @@ export default function CalculatorPage() {
                                     max={2026}
                                     min={1980}
                                     onChange={(e) => setCarYear(e.target.value)}
-                                    className="text-sm md:text-base"
+                                    className="text-base"
                                 />
                             </div>
 
@@ -221,7 +221,7 @@ export default function CalculatorPage() {
                                     min={0}
                                     max={10000}
                                     onChange={(e) => setEngineVolume(e.target.value)}
-                                    className="text-sm md:text-base"
+                                    className="text-base"
                                 />
                             </div>
 
@@ -238,7 +238,7 @@ export default function CalculatorPage() {
                                     max={5000}
                                     value={horsepower}
                                     onChange={(e) => setHorsepower(e.target.value)}
-                                    className="text-sm md:text-base"
+                                    className="text-base"
                                 />
                             </div>
 
@@ -396,6 +396,7 @@ export default function CalculatorPage() {
                                     <Input
                                         id="name"
                                         type="text"
+                                        className="text-base"
                                         placeholder="Ваше имя"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
@@ -408,6 +409,7 @@ export default function CalculatorPage() {
                                         id="phone"
                                         type="tel"
                                         placeholder="Ваш телефон"
+                                        className="text-base"
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}
                                         required
@@ -418,6 +420,7 @@ export default function CalculatorPage() {
                                     <Input
                                         id="email"
                                         type="email"
+                                        className="text-base"
                                         placeholder="example@mail.com"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
