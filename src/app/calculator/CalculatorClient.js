@@ -42,14 +42,14 @@ export default function CalculatorPage() {
     const getFeeByAge = (car, age) => {
         return age <= 3
             ? car['С 1 января 2026 года 0-3 лет']
-            : car['С 1 января 2026 года 3 и более лет'];
+            : car['С 1 января 2026 года 3-5 лет'];
     };
 
     const getCategoryByEngine = (engine, isEV) => {
         if (isEV) return 'EV и последовательные гибриды';
-        if (engine >= 0 && engine <= 1) return 'Объем 0 - 1.0';
-        if (engine > 1 && engine <= 2) return 'Объем 1.0 - 2.0';
-        if (engine > 2 && engine <= 3) return 'Объем 2.0 - 3.0';
+        if (engine >= 0 && engine <= 1000) return 'Объем 0 - 1.0';
+        if (engine > 1000 && engine <= 2000) return 'Объем 1.0 - 2.0';
+        if (engine > 2000 && engine <= 3000) return 'Объем 2.0 - 3.0';
         return null;
     };
 
@@ -61,6 +61,7 @@ export default function CalculatorPage() {
             const [minHp, maxHp] = parseHpRange(car['ЛС']);
 
             if (hp >= minHp && hp <= maxHp) {
+                console.log(getFeeByAge(car, age))
                 return getFeeByAge(car, age);
             }
         }
@@ -170,18 +171,21 @@ export default function CalculatorPage() {
                                     type="number"
                                     placeholder="Например: 2020"
                                     value={carYear}
+                                    max={2026}
+                                    min={1980}
                                     onChange={(e) => setCarYear(e.target.value)}
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="engineVolume">Объем двигателя (л)</Label>
+                                <Label htmlFor="engineVolume">Объем двигателя (см³)</Label>
                                 <Input
                                     id="engineVolume"
                                     type="number"
-                                    step="0.1"
-                                    placeholder="Например: 2.0"
+                                    placeholder="Например: 2000"
                                     value={engineVolume}
+                                    min={0}
+                                    max={10000}
                                     onChange={(e) => setEngineVolume(e.target.value)}
                                 />
                             </div>
