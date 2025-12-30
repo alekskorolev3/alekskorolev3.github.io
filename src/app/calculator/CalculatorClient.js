@@ -1,25 +1,21 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { toast } from 'sonner';
-import { NumericFormat } from 'react-number-format';
+import {useCallback, useState} from 'react';
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '@/components/ui/dialog';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
+import {Checkbox} from '@/components/ui/checkbox';
+import {Button} from '@/components/ui/button';
+import {Textarea} from '@/components/ui/textarea';
+import {toast} from 'sonner';
+import {NumericFormat} from 'react-number-format';
 import CalcTable, {commercialData, personalData} from "@/components/CalcTable";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Info, FileText } from "lucide-react"
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,} from "@/components/ui/tooltip"
+import {Info} from "lucide-react"
 import {useIsMobile} from "@/hooks/useIsMobile";
 import {cn} from "@/lib/utils";
+import {CTAForm} from "@/components/CTAForm";
 
 export default function CalculatorPage() {
     const [carPrice, setCarPrice] = useState('');
@@ -30,11 +26,6 @@ export default function CalculatorPage() {
     const [isEV, setIsEV] = useState(false);
     const [result, setResult] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
 
     const [tooltipOpen, setTooltipOpen] = useState(false)
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -107,32 +98,6 @@ export default function CalculatorPage() {
 
     }, [carPrice, horsepower, engineVolume, carYear, overYearInBelarus, isEV]);
 
-    const handleSubmitForm = async (e) => {
-        e.preventDefault();
-        try {
-            const res = await fetch('https://api.flowauto.ru/api/requests', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, phone, email, message }),
-            });
-            const data = await res.json();
-
-            if (res.ok) {
-                setIsDialogOpen(false);
-                setName('');
-                setPhone('');
-                setEmail('');
-                setMessage('');
-                toast.success('Заявка успешно отправлена!');
-            } else {
-                toast.error(data.error || 'Ошибка при отправке заявки');
-            }
-        } catch (err) {
-            console.error(err);
-            toast.error('Ошибка при отправке заявки');
-        }
-    };
-
     const isFormValid =
         carPrice &&
         carYear &&
@@ -143,8 +108,8 @@ export default function CalculatorPage() {
         <div>
             <section className="relative bg-white py-12 md:py-20 overflow-hidden border-b border-gray-200">
                 {/* декор */}
-                <div className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-56 h-56 md:w-72 md:h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2" />
+                <div className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"/>
+                <div className="absolute bottom-0 left-0 w-56 h-56 md:w-72 md:h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"/>
 
                 <div className="container mx-auto px-4 relative z-10 max-w-4xl">
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
@@ -169,11 +134,10 @@ export default function CalculatorPage() {
                     </div>
                 </div>
             </section>
-
             <div className="container mx-auto px-4 py-4 md:py-12">
                 <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
                     {isMobile ? (
-                        <div className="relative perspective-1000 min-h-[625px]" style={{ perspective: '1000px' }}>
+                        <div className="relative perspective-1000 min-h-[625px]" style={{perspective: '1000px'}}>
                             <div
                                 className="relative transition-transform duration-500"
                                 style={{
@@ -181,7 +145,6 @@ export default function CalculatorPage() {
                                     transform: mobileView === 'result' ? 'rotateY(180deg)' : 'rotateY(0deg)',
                                 }}
                             >
-                                {/* FRONT — форма */}
                                 <div className="absolute inset-0"
                                      style={{
                                          backfaceVisibility: 'hidden',
@@ -197,7 +160,8 @@ export default function CalculatorPage() {
                                             </CardDescription>
                                         </CardHeader>
 
-                                        <CardContent className="flex flex-col flex-1 space-y-5 md:space-y-6 px-4 md:px-6">
+                                        <CardContent
+                                            className="flex flex-col flex-1 space-y-5 md:space-y-6 px-4 md:px-6">
                                             {/* цена */}
                                             <div className="space-y-2">
                                                 <Label htmlFor="carPrice" className="text-sm md:text-base">
@@ -291,13 +255,14 @@ export default function CalculatorPage() {
                                                                 onClick={() => setTooltipOpen((v) => !v)}
                                                                 className="mt-0.5 shrink-0"
                                                             >
-                                                                <Info className="h-4 w-4 text-muted-foreground" />
+                                                                <Info className="h-4 w-4 text-muted-foreground"/>
                                                             </button>
                                                         </TooltipTrigger>
 
                                                         <TooltipContent className="max-w-xs">
                                                             <p className="text-sm">
-                                                                Автомобиль находился на территории Республики Беларусь более 1 года
+                                                                Автомобиль находился на территории Республики Беларусь
+                                                                более 1 года
                                                                 до ввоза в РФ
                                                             </p>
                                                         </TooltipContent>
@@ -340,7 +305,6 @@ export default function CalculatorPage() {
                                     </Card>
                                 </div>
 
-                                {/* BACK — результат */}
                                 <div className="absolute inset-0"
                                      style={{
                                          backfaceVisibility: 'hidden',
@@ -400,9 +364,11 @@ export default function CalculatorPage() {
                                                     </div>
 
                                                     {/* предупреждение */}
-                                                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                                    <div
+                                                        className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                                                         <p className="text-sm md:text-base text-gray-700">
-                                                            Это предварительный расчет. Для получения точной стоимости свяжитесь
+                                                            Это предварительный расчет. Для получения точной стоимости
+                                                            свяжитесь
                                                             с нашим менеджером.
                                                         </p>
                                                     </div>
@@ -426,10 +392,11 @@ export default function CalculatorPage() {
                                                     </Button>
                                                 </div>
                                             ) : (
-                                                <div className="text-center py-10 md:py-12 text-gray-500 text-sm md:text-base">
+                                                <div
+                                                    className="text-center py-10 md:py-12 text-gray-500 text-sm md:text-base">
                                                     <p>
                                                         Заполните данные автомобиля и нажмите кнопку
-                                                        <br className="md:hidden" />
+                                                        <br className="md:hidden"/>
                                                         «Рассчитать стоимость»
                                                     </p>
                                                 </div>
@@ -555,13 +522,14 @@ export default function CalculatorPage() {
                                                         onClick={() => setTooltipOpen((v) => !v)}
                                                         className="mt-0.5 shrink-0"
                                                     >
-                                                        <Info className="h-4 w-4 text-muted-foreground" />
+                                                        <Info className="h-4 w-4 text-muted-foreground"/>
                                                     </button>
                                                 </TooltipTrigger>
 
                                                 <TooltipContent className="max-w-xs">
                                                     <p className="text-sm">
-                                                        Автомобиль находился на территории Республики Беларусь более 1 года
+                                                        Автомобиль находился на территории Республики Беларусь более 1
+                                                        года
                                                         до ввоза в РФ
                                                     </p>
                                                 </TooltipContent>
@@ -675,7 +643,7 @@ export default function CalculatorPage() {
                                         <div className="text-center py-10 md:py-12 text-gray-500 text-sm md:text-base">
                                             <p>
                                                 Заполните данные автомобиля и нажмите кнопку&nbsp;
-                                                <br className="md:hidden" />
+                                                <br className="md:hidden"/>
                                                 «Рассчитать стоимость»
                                             </p>
                                         </div>
@@ -685,72 +653,9 @@ export default function CalculatorPage() {
                         </>
                     )}
                 </div>
-
-                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                    <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                            <DialogTitle>Оставить заявку</DialogTitle>
-                            <DialogDescription>
-                                Заполните форму, и наш менеджер свяжется с вами для уточнения деталей.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <form onSubmit={handleSubmitForm}>
-                            <div className="grid gap-4 py-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="name">Имя *</Label>
-                                    <Input
-                                        id="name"
-                                        type="text"
-                                        className="text-base"
-                                        placeholder="Ваше имя"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="phone">Телефон *</Label>
-                                    <Input
-                                        id="phone"
-                                        type="tel"
-                                        placeholder="Ваш телефон"
-                                        className="text-base"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        className="text-base"
-                                        placeholder="example@mail.com"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="message">Сообщение</Label>
-                                    <Textarea
-                                        id="message"
-                                        placeholder="Расскажите, какой автомобиль вас интересует..."
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                            <Button type="submit" className="w-full bg-[#ffd632] text-black hover:bg-[#e6c02d]">
-                                Отправить
-                            </Button>
-                        </form>
-                    </DialogContent>
-                </Dialog>
             </div>
-
             <CalcTable/>
+            <CTAForm open={isDialogOpen} onOpenChange={setIsDialogOpen} />
         </div>
     );
 }
