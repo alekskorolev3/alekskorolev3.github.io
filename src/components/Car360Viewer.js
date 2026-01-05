@@ -80,7 +80,7 @@ export default function Car360Viewer({ images }) {
     return (
         <div
             ref={containerRef}
-            className="relative w-full aspect-[1.55/1] bg-black overflow-hidden"
+            className="relative cursor-grab w-full aspect-[1.55/1] bg-black overflow-hidden"
         >
             {!isLoaded && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10 bg-gray-300">

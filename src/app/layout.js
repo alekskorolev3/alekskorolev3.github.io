@@ -2,6 +2,7 @@ import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {Toaster} from "@/components/ui/sonner";
+import CookieConsent from "@/components/CookieConsent";
 
 export const metadata = {
     title: "Flow Auto",
@@ -22,6 +23,7 @@ export default function RootLayout({children}) {
                 <Header/>
                 <main className="flex-1">{children}</main>
                 <Footer/>
+                <CookieConsent />
                 <Toaster richColors position="top-center" />
             </body>
         </html>
