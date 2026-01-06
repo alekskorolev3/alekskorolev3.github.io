@@ -1,8 +1,14 @@
 import "./globals.css";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
-import {Toaster} from "@/components/ui/sonner";
-import CookieConsent from "@/components/CookieConsent";
+import { Montserrat } from "next/font/google";
+import ClientProviders from "@/components/ClientProviders";
+
+const montserrat = Montserrat({
+    subsets: ["latin", "cyrillic"],
+    weight: ["400", "500", "600", "700"],
+    display: "swap",
+});
+
 
 export const metadata = {
     title: "Flow Auto",
@@ -13,10 +19,6 @@ export default function RootLayout({children}) {
     return (
         <html lang="ru">
         <head>
-            <link
-                rel="stylesheet"
-                href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
-            />
             <title></title>
 
             <script type="text/javascript"
@@ -91,12 +93,10 @@ export default function RootLayout({children}) {
 
             </script>
         </head>
-        <body className="flex flex-col min-h-screen">
+        <body className={`${montserrat.className} flex flex-col min-h-screen`}>
         <Header/>
         <main className="flex-1">{children}</main>
-        <Footer/>
-        <CookieConsent/>
-        <Toaster richColors position="top-center"/>
+        <ClientProviders />
         </body>
         </html>
     );
