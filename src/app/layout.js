@@ -30,8 +30,7 @@ export default function RootLayout({children}) {
                 (window, document, 'script', 'https://abt.s3.yandex.net/expjs/latest/exp.js', 'ymab'
             )
             ;
-                ymab('metrika.106160339', 'init'/*, {clientFeatures}, {callback}*
-            /);`
+                ymab('metrika.106160339', 'init');`
                     }}
             >
 
