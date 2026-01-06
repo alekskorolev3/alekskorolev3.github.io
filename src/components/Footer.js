@@ -4,12 +4,20 @@ const Footer = () => {
           <div className="container mx-auto px-4 py-8 sm:py-12 text-center min-h-[220px]">
 
               {/* Название */}
-              <h3 className="text-lg sm:text-xl font-semibold mb-2 min-h-[28px]" itemProp="name">
+              <h3
+                  className="text-lg sm:text-xl font-semibold mb-2 h-[28px] leading-[28px]"
+                  itemProp="name"
+                  style={{fontFamily: "'Montserrat', sans-serif"}}
+              >
                   FlowAuto
               </h3>
 
               {/* Описание */}
-              <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6 min-h-[40px]" itemProp="description">
+              <p
+                  className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6 h-[40px] leading-[20px]"
+                  itemProp="description"
+                  style={{fontFamily: "'Montserrat', sans-serif"}}
+              >
                   Подбор автомобилей из Беларуси в Россию. Помогаем выбрать надежную машину без переплат и рисков.
               </p>
 
@@ -24,7 +32,10 @@ const Footer = () => {
               </div>
 
               {/* Копирайт */}
-              <p className="text-gray-500 text-xs sm:text-sm min-h-[16px]">© 2026 flowauto.ru Все права защищены.</p>
+              <p className="text-gray-500 text-xs sm:text-sm h-[16px] leading-[16px]">
+                  © 2026 flowauto.ru Все права защищены.
+              </p>
+
           </div>
       </footer>
   );
