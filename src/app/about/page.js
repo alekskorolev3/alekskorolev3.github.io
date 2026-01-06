@@ -1,3 +1,5 @@
+import CTA from "@/components/CTA";
+
 export default function About() {
     return (
         <div className="bg-white text-gray-900">
@@ -153,36 +155,10 @@ export default function About() {
                 </div>
             </section>
 
-            {/* CTA */}
-            <section className="bg-black text-white">
-                <div className="max-w-6xl mx-auto px-4 py-12 md:py-20 text-center">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">
-                        Хотите купить машину без риска и сюрпризов?
-                    </h2>
-                    <p className="text-gray-300 mb-6 md:mb-8 text-sm md:text-base">
-                        Мы поможем пройти этот путь спокойно, безопасно и с понятным результатом.
-                    </p>
-                    <a
-                        href="/contacts"
-                        className="
-              w-full md:w-auto
-              inline-flex
-              items-center
-              justify-center
-              bg-[#ffd632]
-              text-black
-              px-8 md:px-10
-              py-4
-              rounded-xl
-              font-semibold
-              hover:bg-[#e6c02d]
-              transition-colors
-            "
-                    >
-                        Оставить заявку
-                    </a>
-                </div>
-            </section>
+            <CTA
+                primaryText="Хотите купить машину без риска и сюрпризов?"
+                secondaryText="Мы поможем пройти этот путь спокойно, безопасно и с понятным результатом."
+            />
 
         </div>
     )
