@@ -34,11 +34,11 @@ const Header = () => {
         <div className="bg-gray-900 text-white">
           <div className="container mx-auto px-4 py-2 flex justify-between items-center">
             <a
-                href="tel:+375291234567"
+                href="tel:+375447299067"
                 className="flex items-center gap-2 hover:text-[#ffd632] transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span className="text-sm">+375 (29) 123-45-67</span>
+              <span className="text-sm">+375 (44) 729-90-67</span>
             </a>
 
             <div className="flex items-center gap-4">
@@ -133,6 +133,9 @@ const Header = () => {
               </MobileLink>
               <MobileLink href="/calculator" onClick={closeMenu}>
                 Калькулятор
+              </MobileLink>
+              <MobileLink href="/about" onClick={closeMenu}>
+                О нас
               </MobileLink>
               <MobileLink href="/reviews" onClick={closeMenu}>
                 Отзывы
