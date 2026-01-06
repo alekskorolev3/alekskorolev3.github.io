@@ -10,13 +10,13 @@ const Footer = () => {
           <div className="container mx-auto px-4 py-8 sm:py-12 text-center">
 
               {/* Название */}
-              <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4" itemProp="name">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2" itemProp="name">
                   FlowAuto
               </h3>
 
               {/* Описание */}
               <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6" itemProp="description">
-                  Онлайн-сервис подбора автомобилей из Беларуси в Россию. Помогаем выбрать надежную машину без переплат
+                  Подбор автомобилей из Беларуси в Россию. Помогаем выбрать надежную машину без переплат
                   и
                   рисков.
               </p>
