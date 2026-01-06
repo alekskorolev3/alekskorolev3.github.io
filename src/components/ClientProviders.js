@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import '../app/animations.css';
 
 const Footer = dynamic(() => import("./Footer"), { ssr: false });
 const CookieConsent = dynamic(() => import("./CookieConsent"), { ssr: false });
