@@ -120,56 +120,8 @@ export default function NewsPage() {
           <div className="max-w-3xl">
             <h1 className="mb-6 text-[rgb(60,60,60)] text-[20px] font-bold">Новости и статьи</h1>
             <p className="text-xl text-gray-600">
-              Следите за последними новостями рынка, изменениями в законодательстве и полезными советами от наших экспертов.
+              Следите за последними новостями рынка, изменениями в законодательстве и полезными советами.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Categories Filter */}
-      <section className="bg-white border-b border-gray-200 sticky top-[73px] z-40">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-wrap gap-3">
-            {categories.map((category) => (
-              <button
-                key={category}
-                className={`px-4 py-2 rounded-lg transition-colors ${
-                  category === 'Все'
-                    ? 'bg-[#ffd632] text-black'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Article */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <ImageWithFallback 
-                src={news[0].image}
-                alt={news[0].title}
-                className="w-full h-full object-cover min-h-[300px]"
-              />
-              <div className="p-8 flex flex-col justify-center">
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="bg-[#ffd632] bg-opacity-20 text-black px-3 py-1 rounded-full text-sm">
-                    {news[0].category}
-                  </span>
-                  <span className="text-gray-500 text-sm flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    {news[0].date}
-                  </span>
-                </div>
-                <h2 className="mb-4">{news[0].title}</h2>
-                <p className="text-gray-600 mb-6">{news[0].excerpt}</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -180,7 +132,7 @@ export default function NewsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {news.slice(1).map((article) => (
               <div key={article.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                <ImageWithFallback 
+                <ImageWithFallback
                   src={article.image}
                   alt={article.title}
                   className="w-full h-48 object-cover"

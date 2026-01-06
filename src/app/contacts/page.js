@@ -3,6 +3,7 @@
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import {PHONE, PHONE_TEXT, TELEGRAM, WHATSAPP} from "@/const/contacts";
 
 export default function ContactsPage() {
   const [formData, setFormData] = useState({
@@ -70,36 +71,21 @@ export default function ContactsPage() {
                     <MessageCircle className="w-6 h-6 text-black"/>
                   </div>
                   <div>
-                    <h3 className="mb-2">Телефоны</h3>
+                    <h3 className="mb-2">Телефон</h3>
                     <div className="space-y-1">
                       <p className="text-gray-600">Беларусь:  <a
-                          href="tel:+375291234567"
+                          href={`tel:${PHONE}`}
                           className="text-gray-600 hover:text-black transition-colors"
                       >
-                         +375 (29) 123-45-67
+                        {PHONE_TEXT}
                       </a></p>
-                      <p className="text-gray-600">Россия:  <a
-                          href="tel:+77971234567"
-                          className="text-gray-600 hover:text-black transition-colors"
-                      >
-                         +7 (797) 123-45-67
-                      </a></p>
+                      {/*<p className="text-gray-600">Россия:  <a*/}
+                      {/*    href="tel:+77971234567"*/}
+                      {/*    className="text-gray-600 hover:text-black transition-colors"*/}
+                      {/*>*/}
+                      {/*   +7 (797) 123-45-67*/}
+                      {/*</a></p>*/}
                     </div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div
-                      className="w-12 h-12 bg-[#ffd632] bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6 text-black"/>
-                  </div>
-                  <div>
-                    <h3 className="mb-2">Email</h3>
-                    <a
-                        href="mailto:info@flowauto.ru"
-                        className="text-gray-600 hover:text-black transition-colors"
-                    >
-                      info@flowauto.ru
-                    </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -111,17 +97,17 @@ export default function ContactsPage() {
                     <h3 className="mb-2">Мессенджеры</h3>
                     <div className="space-y-1">
                       <p className="text-gray-600">Telegram: <a
-                          href="https://t.me/flowauto_ru"
+                          href={TELEGRAM}
                           target="_blank"
                           className="text-gray-600 hover:text-black transition-colors"
                       >
-                        @flowauto_ru
+                        {PHONE}
                       </a></p>
                       <p className="text-gray-600">WhatsApp: <a
-                          href="tel:+375291234567"
+                          href={WHATSAPP}
                           className="text-gray-600 hover:text-black transition-colors"
                       >
-                        +375 (29) 123-45-67
+                        {PHONE}
                       </a></p>
                     </div>
                   </div>

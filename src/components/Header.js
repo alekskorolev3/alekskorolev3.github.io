@@ -12,6 +12,7 @@ import {
 import Logo from '../imports/Logo22221'
 import { useEffect, useState } from 'react'
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
+import {PHONE, PHONE_TEXT, TELEGRAM, WHATSAPP} from "@/const/contacts";
 
 const Header = () => {
   const pathname = usePathname()
@@ -35,18 +36,18 @@ const Header = () => {
         <div className="bg-gray-900 text-white">
           <div className="container mx-auto px-4 py-2 flex justify-between items-center">
             <a
-                href="tel:+375447299067"
+                href={`tel:${PHONE}`}
                 className="flex items-center gap-2 hover:text-[#ffd632] transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span className="text-sm">+375 (44) 729-90-67</span>
+              <span className="text-sm">{PHONE_TEXT}</span>
             </a>
 
             <div className="flex items-center gap-4">
               <TooltipProvider delayDuration={0}>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <a href="https://wa.me/375447299067" target="_blank">
+                    <a href={WHATSAPP} target="_blank">
                       <img src="/whatsapp.svg" className="w-5 h-5 hover:text-[#ffd632]"/>
                     </a>
                   </TooltipTrigger>
@@ -61,7 +62,7 @@ const Header = () => {
               <TooltipProvider delayDuration={0}>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <a href="https://t.me/scufcha" target="_blank">
+                    <a href={TELEGRAM} target="_blank">
                       <img src="/telegram.svg" className="w-5 h-5 hover:text-[#ffd632] white"/>
                     </a>
                   </TooltipTrigger>
