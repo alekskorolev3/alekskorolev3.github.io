@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
+import Image from "next/image";
 
 export default function HeroHeader() {
     const carRef = useRef(null);
@@ -51,8 +52,10 @@ export default function HeroHeader() {
                         ref={carRef}
                         className="relative w-full flex justify-center lg:absolute lg:right-[-4rem] lg:w-[62.5%]"
                     >
-                        <img
-                            fetchpriority="high"
+                        <Image
+                            priority
+                            fetchPriority="high"
+                            loading="eager"
                             src="/audi-rs-5-crop.webp"
                             alt="Спортивный автомобиль"
                             width={700}
