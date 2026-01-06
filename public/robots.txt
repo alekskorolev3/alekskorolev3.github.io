@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://flowauto.ru
+
+# Sitemaps
+Sitemap: https://flowauto.ru/sitemap.xml
