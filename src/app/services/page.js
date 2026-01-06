@@ -38,7 +38,7 @@ export default function ServicesPage() {
         {/* Hero Section */}
         <section className="relative py-16 md:py-20 overflow-hidden">
           <div className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-56 h-56 md:w-72 md:h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-t56 h-56 md:w-72 md:h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
           <div className="container mx-auto px-4 relative z-10 text-center">
             <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">Наши услуги</h1>

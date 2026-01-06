@@ -7,10 +7,11 @@ import {
   MessageCircle,
   Phone,
   Menu,
-  X,
+  X, Icon, Info,
 } from 'lucide-react'
 import Logo from '../imports/Logo22221'
 import { useEffect, useState } from 'react'
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 
 const Header = () => {
   const pathname = usePathname()
@@ -42,12 +43,36 @@ const Header = () => {
             </a>
 
             <div className="flex items-center gap-4">
-              <a href="https://instagram.com" target="_blank">
-                <Instagram className="w-5 h-5 hover:text-[#ffd632]" />
-              </a>
-              <a href="https://t.me" target="_blank">
-                <MessageCircle className="w-5 h-5 hover:text-[#ffd632]" />
-              </a>
+              <TooltipProvider delayDuration={0}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a href="https://wa.me/375447299067" target="_blank">
+                      <img src="/whatsapp.svg" className="w-5 h-5 hover:text-[#ffd632]"/>
+                    </a>
+                  </TooltipTrigger>
+
+                  <TooltipContent className="max-w-xs">
+                    <p className="text-sm">
+                    Номер для связи WhatsApp
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <TooltipProvider delayDuration={0}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a href="https://t.me/scufcha" target="_blank">
+                      <img src="/telegram.svg" className="w-5 h-5 hover:text-[#ffd632] white"/>
+                    </a>
+                  </TooltipTrigger>
+
+                  <TooltipContent className="max-w-xs">
+                    <p className="text-sm">
+                    Аккаунт Telegram
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </div>
