@@ -70,8 +70,11 @@ const Header = () => {
               <NavLink href="/calculator" active={isActive('/calculator')}>
                 Калькулятор
               </NavLink>
-              <NavLink href="/reviews" active={isActive('/reviews')}>
-                Отзывы
+              {/*<NavLink href="/reviews" active={isActive('/reviews')}>*/}
+              {/*  Отзывы*/}
+              {/*</NavLink>*/}
+              <NavLink href="/about" active={isActive('/about')}>
+                О нас
               </NavLink>
               <NavLink href="/news" active={isActive('/news')}>
                 Новости

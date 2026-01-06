@@ -1,11 +1,10 @@
 'use client';
 import {ArrowRight, Car, Clock, DollarSign, Shield} from "lucide-react";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
 import {CTAForm} from "@/components/CTAForm";
 import {useState} from "react";
 
-export default function CTA() {
+export default function CTA({primaryText = null, secondaryText = null}) {
 
     const [open, setIsOpen] = useState(false)
 
@@ -23,10 +22,11 @@ export default function CTA() {
             <div className="container mx-auto px-4 text-center relative z-10">
                 <div className="max-w-4xl mx-auto">
                     <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-200">
-                        <h2 className="mb-4 text-[22px] font-bold text-[rgb(60,60,60)]">Готовы найти свой
-                            автомобиль?</h2>
+                        <h2 className="mb-4 text-[22px] font-bold text-[rgb(60,60,60)]">
+                            {primaryText || "Готовы найти свой автомобиль?"}
+                        </h2>
                         <p className="text-xl mb-8 text-gray-600 max-w-2xl mx-auto text-[18px]">
-                            Оставьте заявку, и наши специалисты свяжутся с вами в течение часа
+                            {secondaryText || "Оставьте заявку, и наши специалисты свяжутся с вами в течение часа"}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                             <div
@@ -64,9 +64,6 @@ export default function CTA() {
                             </div>
                         </div>
                     </div>
-                    <p className="mt-6 text-sm text-gray-500">
-                        Более 500 довольных клиентов уже получили свои автомобили
-                    </p>
                 </div>
             </div>
             <CTAForm open={open} onOpenChange={setIsOpen} />
