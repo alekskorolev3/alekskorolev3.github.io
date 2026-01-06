@@ -48,7 +48,7 @@ const Header = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <a href={WHATSAPP} target="_blank">
-                      <img src="/whatsapp.svg" className="w-5 h-5 hover:text-[#ffd632]"/>
+                      <img src="/whatsapp.svg" alt="WhatsApp link" className="w-5 h-5 hover:text-[#ffd632]"/>
                     </a>
                   </TooltipTrigger>
 
@@ -63,7 +63,7 @@ const Header = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <a href={TELEGRAM} target="_blank">
-                      <img src="/telegram.svg" className="w-5 h-5 hover:text-[#ffd632] white"/>
+                      <img src="/telegram.svg" alt="Telegram link" className="w-5 h-5 hover:text-[#ffd632] white"/>
                     </a>
                   </TooltipTrigger>
 

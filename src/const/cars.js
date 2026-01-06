@@ -30,7 +30,7 @@ export const cars = [
         priceBy: '1600000',
         priceRu: '2050000',
         savings: '450000',
-        images: Array.from({ length: 6 }, (_, i) => `/kia_seltos/${i + 1}.jpg`),
+        images: Array.from({ length: 6 }, (_, i) => `/kia_seltos/${i + 1}.webp`),
         images360: Array.from({ length: 70 }, (_, i) => {
             const index = String(i + 1).padStart(3, '0')
             return {
@@ -49,7 +49,7 @@ export const cars = [
         priceBy: '970000',
         priceRu: '1320000',
         savings: '350000',
-        images: Array.from({ length: 6 }, (_, i) => `/buick_encore_gx/${i + 1}.jpg`),
+        images: Array.from({ length: 6 }, (_, i) => `/buick_encore_gx/${i + 1}.webp`),
         images360: Array.from({ length: 81 }, (_, i) => {
             const index = String(i + 1).padStart(3, '0')
             return {
@@ -69,7 +69,7 @@ export const cars = [
         priceBy: '950000',
         priceRu: '1300000',
         savings: '350000',
-        images: Array.from({ length: 9 }, (_, i) => `/chevrolet_malibu/${i + 1}.jpg`),
+        images: Array.from({ length: 9 }, (_, i) => `/chevrolet_malibu/${i + 1}.webp`),
         images360: Array.from({ length: 36 }, (_, i) => {
             const index = String(i + 1).padStart(2, '0')
             return {
