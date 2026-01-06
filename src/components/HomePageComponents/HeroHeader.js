@@ -52,8 +52,11 @@ export default function HeroHeader() {
                         className="relative w-full flex justify-center lg:absolute lg:right-[-4rem] lg:w-[62.5%]"
                     >
                         <img
+                            fetchpriority="high"
                             src="/audi-rs-5-crop.webp"
                             alt="Спортивный автомобиль"
+                            width={700}
+                            height={400}
                             className="w-full max-w-[420px] sm:max-w-[420px] md:max-w-[540px] lg:max-w-[700px] h-auto object-contain"
                         />
                     </div>
