@@ -1,14 +1,11 @@
 'use client';
 
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import {Checkbox} from '@/components/ui/checkbox';
 import {Button} from '@/components/ui/button';
-import {Textarea} from '@/components/ui/textarea';
-import {toast} from 'sonner';
 import {NumericFormat} from 'react-number-format';
 import CalcTable, {commercialData, personalData} from "@/components/CalcTable";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,} from "@/components/ui/tooltip"
@@ -16,12 +13,16 @@ import {Info} from "lucide-react"
 import {useIsMobile} from "@/hooks/useIsMobile";
 import {cn} from "@/lib/utils";
 import {CTAForm} from "@/components/CTAForm";
+import {useSearchParams} from "next/navigation";
 
 export default function CalculatorPage() {
-    const [carPrice, setCarPrice] = useState('');
-    const [carYear, setCarYear] = useState('');
-    const [engineVolume, setEngineVolume] = useState('');
-    const [horsepower, setHorsepower] = useState('');
+
+    const searchParams = useSearchParams()
+
+    const [carPrice, setCarPrice] = useState(searchParams.get('price') || '');
+    const [carYear, setCarYear] = useState(searchParams.get('year') ||'');
+    const [engineVolume, setEngineVolume] = useState(searchParams.get('engine') ||'');
+    const [horsepower, setHorsepower] = useState(searchParams.get('horsepower') ||'');
     const [overYearInBelarus, setOverYearInBelarus] = useState(true);
     const [isEV, setIsEV] = useState(false);
     const [result, setResult] = useState(null);
@@ -104,12 +105,25 @@ export default function CalculatorPage() {
         horsepower &&
         (isEV || engineVolume);
 
+    useEffect(() => {
+        if (searchParams.get('price') && isFormValid) {
+            setIsSubmitted(true);
+
+            calculateCost();
+            if (isMobile) {
+                setMobileView('result');
+            }
+        }
+    }, [])
+
     return (
         <div>
             <section className="relative bg-white py-12 md:py-20 overflow-hidden border-b border-gray-200">
                 {/* декор */}
-                <div className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"/>
-                <div className="absolute bottom-0 left-0 w-56 h-56 md:w-72 md:h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"/>
+                <div
+                    className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"/>
+                <div
+                    className="absolute bottom-0 left-0 w-56 h-56 md:w-72 md:h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"/>
 
                 <div className="container mx-auto px-4 relative z-10 max-w-4xl">
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
@@ -655,7 +669,7 @@ export default function CalculatorPage() {
                 </div>
             </div>
             <CalcTable/>
-            <CTAForm open={isDialogOpen} onOpenChange={setIsDialogOpen} />
+            <CTAForm open={isDialogOpen} onOpenChange={setIsDialogOpen}/>
         </div>
     );
 }

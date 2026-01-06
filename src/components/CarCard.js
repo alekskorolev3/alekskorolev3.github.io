@@ -225,7 +225,7 @@ export default function CarCard({ car }) {
             {/* Кнопки */}
             <div className="space-y-3">
               <Link
-                  href={`/calculator?brand=${encodeURIComponent(`${car.brand} ${car.model}`)}&price=${car.priceBy}`}
+                  href={`/calculator?price=${car.priceBy}&year=${car.year}&engine=${parseInt(car.engine) * 1000}&horsepower=${car.power}`}
                   className="
                 w-full
                 bg-[#ffd632]
