@@ -60,7 +60,7 @@ export default function CarCard({ car }) {
               border border-black/10
             "
             >
-              Выгода {car.savings} ₽
+              Выгода {parseInt(car.savings).toLocaleString('ru-RU')} ₽
             </div>
           </div>
 
@@ -214,11 +214,11 @@ export default function CarCard({ car }) {
             <div className="mb-5 bg-gray-50 rounded-lg p-4 border border-gray-100">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Цена в РБ:</span>
-                <span className="font-medium">от {car.priceBy} ₽</span>
+                <span className="font-medium">от {parseInt(car.priceBy).toLocaleString('ru-RU')} ₽</span>
               </div>
               <div className="flex justify-between text-sm mt-1">
                 <span className="text-gray-600">Цена в РФ:</span>
-                <span className="font-medium">от {car.priceRu} ₽</span>
+                <span className="font-medium">от {parseInt(car.priceRu).toLocaleString('ru-RU')} ₽</span>
               </div>
             </div>
 
