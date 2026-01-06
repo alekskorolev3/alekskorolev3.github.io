@@ -77,6 +77,19 @@ export default function RootLayout({children}) {
             >
 
             </noscript>
+
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-61FJTK1WT1"></script>
+            <script type="text/javascript"
+                    dangerouslySetInnerHTML={{
+                        __html: `window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-61FJTK1WT1');`
+                    }}
+            >
+
+            </script>
         </head>
         <body className="flex flex-col min-h-screen">
         <Header/>
