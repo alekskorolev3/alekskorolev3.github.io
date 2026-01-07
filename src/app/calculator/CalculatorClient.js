@@ -69,7 +69,6 @@ export default function CalculatorPage() {
             const [minHp, maxHp] = parseHpRange(car['ЛС']);
 
             if (hp >= minHp && hp <= maxHp) {
-                console.log(getFeeByAge(car, age))
                 return getFeeByAge(car, age);
             }
         }
