@@ -106,9 +106,6 @@ export const news = [
   },
 ]
 
-
-const categories = ['Все', 'Законодательство', 'Аналитика', 'Советы', 'Компания'];
-
 export default function NewsPage() {
   return (
     <div>
@@ -130,7 +127,7 @@ export default function NewsPage() {
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {news.slice(1).map((article) => (
+            {news.map((article) => (
               <div key={article.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                 <ImageWithFallback
                   src={article.image}
@@ -156,28 +153,6 @@ export default function NewsPage() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="bg-gray-900 text-white rounded-2xl p-12 text-center">
-            <h2 className="mb-4">Подпишитесь на новости</h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Получайте актуальную информацию о рынке автомобилей и специальные предложения
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Ваш email"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#ffd632]"
-              />
-              <button className="bg-[#ffd632] text-black px-6 py-3 rounded-lg hover:bg-[#e6c02d] transition-colors whitespace-nowrap">
-                Подписаться
-              </button>
-            </div>
           </div>
         </div>
       </section>
