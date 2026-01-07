@@ -22,6 +22,7 @@ export default function RootLayout({children}) {
         <head>
             <title></title>
 
+
             <script type="text/javascript"
                     dangerouslySetInnerHTML={{
                         __html: `(function (e, x, pe, r, i, me, nt
