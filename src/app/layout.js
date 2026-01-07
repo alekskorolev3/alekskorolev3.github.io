@@ -94,9 +94,9 @@ export default function RootLayout({children}) {
             </script>
         </head>
         <body className={`${montserrat.className} flex flex-col min-h-screen`}>
-        <Header/>
-        <main className="flex-1">{children}</main>
-        <ClientProviders />
+            <Header/>
+            <main className="flex-1">{children}</main>
+            <ClientProviders />
         </body>
         </html>
     );

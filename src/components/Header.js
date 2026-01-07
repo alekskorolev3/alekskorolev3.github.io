@@ -1,35 +1,9 @@
-'use client'
+import Link from "next/link";
+import Logo from "../imports/Logo22221";
+import HeaderClient from "./HeaderClient";
+import { PHONE, PHONE_TEXT, TELEGRAM, WHATSAPP } from "@/const/contacts";
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import {
-  Instagram,
-  MessageCircle,
-  Phone,
-  Menu,
-  X, Icon, Info,
-} from 'lucide-react'
-import Logo from '../imports/Logo22221'
-import { useEffect, useState } from 'react'
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
-import {PHONE, PHONE_TEXT, TELEGRAM, WHATSAPP} from "@/const/contacts";
-
-const Header = () => {
-  const pathname = usePathname()
-  const [mounted, setMounted] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
-  const normalize = (path) => path.replace(/\/$/, '')
-  const isActive = (path) => normalize(pathname) === normalize(path)
-
-  const closeMenu = () => setIsOpen(false)
-
+export default function Header() {
   return (
       <header className="bg-white shadow-sm sticky top-0 z-50">
         {/* TOP BAR */}
@@ -39,41 +13,16 @@ const Header = () => {
                 href={`tel:${PHONE}`}
                 className="flex items-center gap-2 hover:text-[#ffd632] transition-colors"
             >
-              <Phone className="w-4 h-4" />
-              <span className="text-sm">{PHONE_TEXT}</span>
+              {PHONE_TEXT}
             </a>
 
             <div className="flex items-center gap-4">
-              <TooltipProvider delayDuration={0}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <a href={WHATSAPP} target="_blank">
-                      <img src="/whatsapp.svg" alt="WhatsApp link" className="w-5 h-5 hover:text-[#ffd632]"/>
-                    </a>
-                  </TooltipTrigger>
-
-                  <TooltipContent className="max-w-xs">
-                    <p className="text-sm">
-                    Номер для связи WhatsApp
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider delayDuration={0}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <a href={TELEGRAM} target="_blank">
-                      <img src="/telegram.svg" alt="Telegram link" className="w-5 h-5 hover:text-[#ffd632] white"/>
-                    </a>
-                  </TooltipTrigger>
-
-                  <TooltipContent className="max-w-xs">
-                    <p className="text-sm">
-                    Аккаунт Telegram
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <a href={WHATSAPP} target="_blank">
+                <img src="/whatsapp.svg" alt="WhatsApp link" className="w-5 h-5" />
+              </a>
+              <a href={TELEGRAM} target="_blank">
+                <img src="/telegram.svg" alt="Telegram link" className="w-5 h-5" />
+              </a>
             </div>
           </div>
         </div>
@@ -81,139 +30,32 @@ const Header = () => {
         {/* MAIN HEADER */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            {/* LOGO */}
             <Link href="/" className="flex items-center">
               <div className="w-32 h-8">
                 <Logo />
               </div>
             </Link>
 
-            {/* DESKTOP NAV */}
+            {/* DESKTOP NAV — ВАЖНО: ссылки существуют в HTML */}
             <nav className="hidden lg:flex items-center gap-8">
-              <NavLink href="/services" active={isActive('/services')}>
-                Услуги
-              </NavLink>
-              <NavLink href="/calculator" active={isActive('/calculator')}>
-                Калькулятор
-              </NavLink>
-              {/*<NavLink href="/reviews" active={isActive('/reviews')}>*/}
-              {/*  Отзывы*/}
-              {/*</NavLink>*/}
-              <NavLink href="/about" active={isActive('/about')}>
-                О нас
-              </NavLink>
-              <NavLink href="/news" active={isActive('/news')}>
-                Новости
-              </NavLink>
-              <NavLink href="/contacts" active={isActive('/contacts')}>
-                Контакты
-              </NavLink>
+              <Link href="/services">Услуги</Link>
+              <Link href="/calculator">Калькулятор</Link>
+              <Link href="/about">О нас</Link>
+              <Link href="/news">Новости</Link>
+              <Link href="/contacts">Контакты</Link>
             </nav>
 
-            {/* DESKTOP BUTTON */}
             <Link
                 href="/contacts"
-                className="hidden lg:inline-flex bg-[#ffd632] text-black px-6 py-2 rounded-lg hover:bg-[#e6c02d] transition-colors"
+                className="hidden lg:inline-flex bg-[#ffd632] text-black px-6 py-2 rounded-lg"
             >
               Связаться
             </Link>
 
-            {/* BURGER */}
-            <button
-                onClick={() => setIsOpen(true)}
-                className="lg:hidden p-2"
-                aria-label="Open menu"
-            >
-              <Menu className="w-7 h-7" />
-            </button>
-          </div>
-        </div>
-
-        {/* OVERLAY */}
-        {isOpen && (
-            <div
-                className="fixed inset-0 bg-black/40 z-40"
-                onClick={closeMenu}
-            />
-        )}
-
-        {/* MOBILE MENU */}
-        <div
-            className={`
-          fixed top-0 right-0 h-full w-[280px] bg-white z-50
-          transform transition-transform duration-300
-          ${isOpen ? 'translate-x-0' : 'translate-x-full'}
-        `}
-        >
-          <div className="p-6 flex flex-col h-full">
-            <div className="flex justify-between items-center mb-8">
-              <span className="text-lg font-semibold">Меню</span>
-              <button onClick={closeMenu}>
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            <nav className="flex flex-col gap-6 text-lg">
-              <MobileLink href="/services" onClick={closeMenu}>
-                Услуги
-              </MobileLink>
-              <MobileLink href="/calculator" onClick={closeMenu}>
-                Калькулятор
-              </MobileLink>
-              <MobileLink href="/about" onClick={closeMenu}>
-                О нас
-              </MobileLink>
-              <MobileLink href="/reviews" onClick={closeMenu}>
-                Отзывы
-              </MobileLink>
-              <MobileLink href="/news" onClick={closeMenu}>
-                Новости
-              </MobileLink>
-              <MobileLink href="/contacts" onClick={closeMenu}>
-                Контакты
-              </MobileLink>
-            </nav>
-
-            <div className="mt-auto">
-              <Link
-                  href="/contacts"
-                  onClick={closeMenu}
-                  className="block text-center bg-[#ffd632] text-black py-3 rounded-lg hover:bg-[#e6c02d] transition-colors"
-              >
-                Связаться
-              </Link>
-            </div>
+            {/* CLIENT PART */}
+            <HeaderClient />
           </div>
         </div>
       </header>
-  )
+  );
 }
-
-/* 🔹 NavLink desktop */
-function NavLink({ href, active, children }) {
-  return (
-      <Link
-          href={href}
-          className={`transition-colors ${
-              active ? 'text-black' : 'text-gray-700 hover:text-black'
-          }`}
-      >
-        {children}
-      </Link>
-  )
-}
-
-/* 🔹 NavLink mobile */
-function MobileLink({ href, children, onClick }) {
-  return (
-      <Link
-          href={href}
-          onClick={onClick}
-          className="text-gray-800 hover:text-black transition-colors"
-      >
-        {children}
-      </Link>
-  )
-}
-
-export default Header
