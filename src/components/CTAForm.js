@@ -23,7 +23,7 @@ export const CTAForm = ({open, onOpenChange}) => {
             const data = await res.json();
 
             if (res.ok) {
-                setIsDialogOpen(false);
+                onOpenChange(false);
                 setName('');
                 setPhone('');
                 setEmail('');
