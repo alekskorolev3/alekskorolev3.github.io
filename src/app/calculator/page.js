@@ -1,7 +1,7 @@
 import CalculatorClient from './CalculatorClient'
 import {Button} from "@/components/ui/button";
 import {FileText} from "lucide-react";
-import React from "react";
+import Image from "next/image";
 
 export const metadata = {
     title: "Калькулятор | Flow Auto",
@@ -23,8 +23,9 @@ export default function CalculatorPage() {
 
               <div className="container mx-auto px-4 relative z-10 max-w-4xl">
                   <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                      {/* картинка */}
-                      <img
+                      <Image
+                          width={200}
+                          height={110}
                           className="w-20 md:w-auto md:max-h-[110px]"
                           src="/calculator.webp"
                           alt="Калькулятор утилизационного сбора"
