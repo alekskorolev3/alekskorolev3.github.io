@@ -50,14 +50,15 @@ export default function HeadScripts() {
         `}
             </Script>
 
-            <noscript>
-                <div>
+            <noscript dangerouslySetInnerHTML={{
+                __html: `<div>
                     <img
                         src="https://mc.yandex.ru/watch/106160339"
                         style={{position:'absolute', left:'-9999px'}}
                         alt=""
                     />
-                </div>
+                </div>`
+            }}>
             </noscript>
 
             {/* Google Tag Manager */}
@@ -76,12 +77,13 @@ export default function HeadScripts() {
         `}
             </Script>
 
-            <noscript>
-                <iframe
+            <noscript dangerouslySetInnerHTML={{
+                __html: `<iframe
                     src="https://www.googletagmanager.com/ns.html?id=GTM-WHFKJJ4L"
                     height="0" width="0"
                     style={{display:'none',visibility:'hidden'}}
-                ></iframe>
+                ></iframe>`
+            }}>
             </noscript>
 
             {/* Google Analytics */}
