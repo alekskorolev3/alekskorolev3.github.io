@@ -1168,24 +1168,6 @@ function CalcTable() {
                     </tbody>
                 </table>
             </div>
-
-            <div className="mt-4">
-                <Button variant="link" asChild className="px-0">
-                    <a
-                        href="/Постановление Правительства РФ от 26.12.2013 № 1291 Об утилизационном сборе.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-start gap-2 text-sm"
-                    >
-                        <FileText className="h-4 w-4 mt-0.5 shrink-0"/>
-                        <span>
-                          Постановление Правительства РФ&nbsp;
-                          <br className="sm:hidden"/>
-                          «Об утилизационном сборе»
-                        </span>
-                    </a>
-                </Button>
-            </div>
         </div>
     );
 }
