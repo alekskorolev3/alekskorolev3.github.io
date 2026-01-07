@@ -13,27 +13,18 @@ export default function Slider({
 
     useEffect(() => {
         const update = () => {
-            if (window.innerWidth < 640) {
-                setSlidesPerView(breakpoints.mobile);
-            } else if (window.innerWidth < 1024) {
-                setSlidesPerView(breakpoints.tablet);
-            } else {
-                setSlidesPerView(breakpoints.desktop);
-            }
+            if (window.innerWidth < 640) setSlidesPerView(breakpoints.mobile);
+            else if (window.innerWidth < 1024) setSlidesPerView(breakpoints.tablet);
+            else setSlidesPerView(breakpoints.desktop);
         };
-
         update();
         window.addEventListener('resize', update);
         return () => window.removeEventListener('resize', update);
     }, [breakpoints]);
 
     const maxSlide = Math.max(0, items.length - slidesPerView);
-
-    const next = () =>
-        setCurrentSlide((prev) => (prev >= maxSlide ? 0 : prev + 1));
-
-    const prev = () =>
-        setCurrentSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
+    const next = () => setCurrentSlide((prev) => (prev >= maxSlide ? 0 : prev + 1));
+    const prev = () => setCurrentSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
 
     if (items.length === 0) return null;
 
@@ -43,25 +34,19 @@ export default function Slider({
                 <>
                     <button
                         onClick={prev}
-                        className="absolute left-1 top-1/2 -translate-y-1/2 z-10
-                                   w-10 h-10 bg-[#ffd632] rounded-full flex items-center justify-center
-                                   hover:bg-[#e6c02d] shadow-lg"
+                        className="absolute left-1 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-[#ffd632] rounded-full flex items-center justify-center hover:bg-[#e6c02d] shadow-lg"
                     >
                         <ChevronLeft className="w-5 h-5 text-black" />
                     </button>
-
                     <button
                         onClick={next}
-                        className="absolute right-1 top-1/2 -translate-y-1/2 z-10
-                                   w-10 h-10 bg-[#ffd632] rounded-full flex items-center justify-center
-                                   hover:bg-[#e6c02d] shadow-lg"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-[#ffd632] rounded-full flex items-center justify-center hover:bg-[#e6c02d] shadow-lg"
                     >
                         <ChevronRight className="w-5 h-5 text-black" />
                     </button>
                 </>
             )}
 
-            {/* track */}
             <div className="overflow-hidden">
                 <div
                     className="flex transition-transform duration-500 ease-in-out"
@@ -77,10 +62,7 @@ export default function Slider({
                             key={i}
                             className="flex-shrink-0 px-2 sm:px-4"
                             style={{
-                                width:
-                                    slidesPerView === 1
-                                        ? '100%'
-                                        : `${100 / slidesPerView}%`,
+                                width: slidesPerView === 1 ? '100%' : `${100 / slidesPerView}%`,
                             }}
                         >
                             {renderItem(item)}
@@ -89,18 +71,13 @@ export default function Slider({
                 </div>
             </div>
 
-            {/* dots */}
             {items.length > slidesPerView && (
                 <div className="flex justify-center gap-2 mt-6">
                     {Array.from({ length: maxSlide + 1 }).map((_, i) => (
                         <button
                             key={i}
                             onClick={() => setCurrentSlide(i)}
-                            className={`h-3 rounded-full transition-all ${
-                                currentSlide === i
-                                    ? 'bg-[#ffd632] w-8'
-                                    : 'bg-gray-300 w-3'
-                            }`}
+                            className={`h-3 rounded-full transition-all ${currentSlide === i ? 'bg-[#ffd632] w-8' : 'bg-gray-300 w-3'}`}
                         />
                     ))}
                 </div>
