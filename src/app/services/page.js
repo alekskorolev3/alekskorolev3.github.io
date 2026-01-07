@@ -1,4 +1,3 @@
-'use client';
 import {CheckCircle, Search, FileText, Car} from 'lucide-react';
 import Link from 'next/link';
 import CTA from "@/components/CTA";
@@ -30,6 +29,11 @@ const stepsData = [
     subtitle: "Доставляем автомобиль в ваш город, помогаем с постановкой на учёт. Вы получаете ключи и документы!"
   },
 ]
+
+export const metadata = {
+  title: "Услуги | Flow Auto",
+  description: "Подберите автомобиль из Беларуси"
+};
 
 export default function ServicesPage() {
   return (

@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import CalculatorClient from './CalculatorClient'
 
 export const metadata = {
-    title: "Flow Auto | Калькулятор",
+    title: "Калькулятор | Flow Auto",
     description: "Подберите автомобиль из Беларуси с помощью калькулятора",
     alternates: {
         canonical: '/calculator'

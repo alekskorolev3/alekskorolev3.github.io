@@ -5,6 +5,11 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import {PHONE, PHONE_TEXT, TELEGRAM, WHATSAPP} from "@/const/contacts";
 
+// export const metadata = {
+//   title: "Контакты | Flow Auto",
+//   description: "Подберите автомобиль из Беларуси"
+// };
+
 export default function ContactsPage() {
   const [formData, setFormData] = useState({
     name: '',

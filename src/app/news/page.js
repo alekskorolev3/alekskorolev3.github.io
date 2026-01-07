@@ -106,6 +106,11 @@ export const news = [
   },
 ]
 
+export const metadata = {
+  title: "Новости | Flow Auto",
+  description: "Подберите автомобиль из Беларуси"
+};
+
 export default function NewsPage() {
   return (
     <div>
