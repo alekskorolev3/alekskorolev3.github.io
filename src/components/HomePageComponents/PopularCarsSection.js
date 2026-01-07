@@ -1,3 +1,4 @@
+'use client'
 import Slider from "@/components/Slider";
 import {cars} from "@/const/cars";
 import CarCard from "@/components/CarCard";
