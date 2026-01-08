@@ -4,7 +4,7 @@ export default function HeadScripts() {
     return (
         <>
             {/* Яндекс A/B тесты */}
-            <Script id="ymab" strategy="afterInteractive">
+            <Script id="_ym" strategy="afterInteractive">
                 {`
           (function (e, x, pe, r, i, me, nt){
             e[i] = e[i] || function () {
@@ -27,7 +27,7 @@ export default function HeadScripts() {
             </Script>
 
             {/* Яндекс.Метрика */}
-            <Script id="ym" strategy="afterInteractive">
+            <Script id="ym2" strategy="afterInteractive">
                 {`
           (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
