@@ -4,14 +4,14 @@ const Footer = () => {
             <div className="container mx-auto px-4 py-8 sm:py-12 text-center min-h-[220px]">
 
                 {/* Название */}
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 leading-[1.5]">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 leading-[1.5] min-h-[1.75rem]">
                     FlowAuto
                 </h3>
 
-                {/* Описание */}
                 <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6 leading-6 min-h-[2.5rem]">
                     Подбор автомобилей из Беларуси в Россию. Помогаем выбрать надежную машину без переплат и рисков.
                 </p>
+
 
                 {/* Ссылки */}
                 <div className="flex flex-col sm:flex-row justify-center text-gray-400 text-sm sm:text-base mb-4 gap-2 sm:gap-6">
