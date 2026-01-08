@@ -1,7 +1,6 @@
 # *
 User-agent: *
 Allow: /
-Disallow: /calculator?*
 
 # Host
 Host: https://flowauto.ru
