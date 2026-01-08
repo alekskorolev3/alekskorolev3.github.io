@@ -6,7 +6,7 @@ import CarCard from "@/components/CarCard";
 export default function PopularCarsSection() {
 
     return (
-        <section className="py-16 bg-gradient-to-b from-white to-gray-50">
+        <section id="popular" className="py-16 bg-gradient-to-b from-white to-gray-50">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center mb-12">
                     <div>
