@@ -7,7 +7,6 @@ const Footer = () => {
               <h3
                   className="text-lg sm:text-xl font-semibold mb-2 h-[28px] leading-[28px]"
                   itemProp="name"
-                  style={{fontFamily: "'Montserrat', sans-serif"}}
               >
                   FlowAuto
               </h3>
@@ -16,7 +15,6 @@ const Footer = () => {
               <p
                   className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6 h-[40px] leading-[20px]"
                   itemProp="description"
-                  style={{fontFamily: "'Montserrat', sans-serif"}}
               >
                   Подбор автомобилей из Беларуси в Россию. Помогаем выбрать надежную машину без переплат и рисков.
               </p>
