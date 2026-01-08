@@ -30,11 +30,9 @@ export default function Header() {
         {/* MAIN HEADER */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center">
-              <div className="w-32 h-8">
-                <Logo />
-              </div>
-            </Link>
+            <div className="flex items-center w-32 h-8">
+              <Logo/>
+            </div>
 
             {/* DESKTOP NAV — ВАЖНО: ссылки существуют в HTML */}
             <nav className="hidden lg:flex items-center gap-8">
