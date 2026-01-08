@@ -8,7 +8,7 @@ import HeadScripts from "@/components/HeadScripts";
 const montserrat = Montserrat({
     subsets: ["latin", "cyrillic"],
     weight: ["400", "500", "600", "700"],
-    display: "block",
+    display: "swap",
     fallback: ["Arial", "sans-serif"],
 });
 
@@ -24,7 +24,7 @@ export default function RootLayout({children}) {
         <head>
             <title></title>
         </head>
-        <body className={`${montserrat.className} flex flex-col min-h-screen`}>
+        <body className={`${montserrat.className} flex flex-col`}>
         <Header/>
         <main className="flex-1">{children}</main>
         <Footer className={`${montserrat.className}`}/>
