@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import { Montserrat } from "next/font/google";
 import ClientProviders from "@/components/ClientProviders";
 import Footer from "@/components/Footer";
-import Script from "next/script";
 import HeadScripts from "@/components/HeadScripts";
 
 const montserrat = Montserrat({
@@ -23,13 +22,11 @@ export default function RootLayout({children}) {
         <html lang="ru">
         <head>
             <title></title>
-
-
         </head>
         <body className={`${montserrat.className} flex flex-col min-h-screen`}>
         <Header/>
         <main className="flex-1">{children}</main>
-        <Footer/>
+        <Footer className={`${montserrat.className}`}/>
         <ClientProviders/>
 
         <HeadScripts/>
