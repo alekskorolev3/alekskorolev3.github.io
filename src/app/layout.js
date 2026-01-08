@@ -22,22 +22,6 @@ export default function RootLayout({children}) {
         <html lang="ru">
         <head>
             <title></title>
-            <Script id="url-normalizer" strategy="beforeInteractive">
-                {`
-            (function() {
-              try {
-                var path = window.location.pathname;
-                var clean = path.replace(/\\/+/g, '/');
-
-                if (path !== clean) {
-                  window.location.replace(
-                    clean + window.location.search + window.location.hash
-                  );
-                }
-              } catch(e) {}
-            })();
-          `}
-            </Script>
 
             <script type="text/javascript"
                     dangerouslySetInnerHTML={{
