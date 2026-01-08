@@ -9,6 +9,7 @@ const montserrat = Montserrat({
     subsets: ["latin", "cyrillic"],
     weight: ["400", "500", "600", "700"],
     display: "swap",
+    fallback: ["Arial", "sans-serif"],
 });
 
 
