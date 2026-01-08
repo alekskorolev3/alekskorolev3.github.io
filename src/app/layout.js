@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { Montserrat } from "next/font/google";
 import ClientProviders from "@/components/ClientProviders";
 import Footer from "@/components/Footer";
+import Script from "next/script";
 
 const montserrat = Montserrat({
     subsets: ["latin", "cyrillic"],
@@ -21,7 +22,22 @@ export default function RootLayout({children}) {
         <html lang="ru">
         <head>
             <title></title>
+            <Script id="url-normalizer" strategy="beforeInteractive">
+                {`
+            (function() {
+              try {
+                var path = window.location.pathname;
+                var clean = path.replace(/\\/+/g, '/');
 
+                if (path !== clean) {
+                  window.location.replace(
+                    clean + window.location.search + window.location.hash
+                  );
+                }
+              } catch(e) {}
+            })();
+          `}
+            </Script>
 
             <script type="text/javascript"
                     dangerouslySetInnerHTML={{
