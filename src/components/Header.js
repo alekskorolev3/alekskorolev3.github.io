@@ -1,9 +1,14 @@
+'use client'
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logo from "../imports/Logo22221";
 import HeaderClient from "./HeaderClient";
 import { PHONE, PHONE_TEXT, TELEGRAM, WHATSAPP } from "@/const/contacts";
 
 export default function Header() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   return (
       <header className="bg-white shadow-sm sticky top-0 z-50">
         {/* TOP BAR */}
@@ -17,10 +22,10 @@ export default function Header() {
             </a>
 
             <div className="flex items-center gap-4">
-              <a href={WHATSAPP} target="_blank">
+              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
                 <img src="/whatsapp.svg" alt="WhatsApp link" className="w-5 h-5" />
               </a>
-              <a href={TELEGRAM} target="_blank">
+              <a href={TELEGRAM} target="_blank" rel="noopener noreferrer">
                 <img src="/telegram.svg" alt="Telegram link" className="w-5 h-5" />
               </a>
             </div>
@@ -30,11 +35,22 @@ export default function Header() {
         {/* MAIN HEADER */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center w-32 h-8">
-              <Logo/>
-            </div>
+            {/* Условный рендеринг ссылки на логотипе */}
+            {isHomePage ? (
+                // На главной странице - просто логотип без ссылки
+                <div className="flex items-center w-32 h-8">
+                  <Logo />
+                </div>
+            ) : (
+                // На остальных страницах - логотип со ссылкой на главную
+                <Link href="/" className="flex items-center">
+                  <div className="w-32 h-8">
+                    <Logo />
+                  </div>
+                </Link>
+            )}
 
-            {/* DESKTOP NAV — ВАЖНО: ссылки существуют в HTML */}
+            {/* DESKTOP NAV */}
             <nav className="hidden lg:flex items-center gap-8">
               <Link href="/services">Услуги</Link>
               <Link href="/calculator">Калькулятор</Link>
@@ -45,7 +61,7 @@ export default function Header() {
 
             <Link
                 href="/contacts"
-                className="hidden lg:inline-flex bg-[#ffd632] text-black px-6 py-2 rounded-lg"
+                className="hidden lg:inline-flex bg-[#ffd632] text-black px-6 py-2 rounded-lg hover:bg-[#e6c12d] transition-colors"
             >
               Связаться
             </Link>
