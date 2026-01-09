@@ -1,6 +1,6 @@
 import "./globals.css";
 import Header from "../components/Header";
-import { Montserrat } from "next/font/google";
+import {Montserrat} from "next/font/google";
 import ClientProviders from "@/components/ClientProviders";
 import Footer from "@/components/Footer";
 import HeadScripts from "@/components/HeadScripts";
@@ -62,7 +62,6 @@ export default function RootLayout({children}) {
     return (
         <html lang="ru" className={`${montserrat.variable}`}>
         <head>
-            {/* Предварительное подключение к CDN шрифтов для ускорения */}
             <link
                 rel="preconnect"
                 href="https://fonts.gstatic.com"
@@ -73,17 +72,20 @@ export default function RootLayout({children}) {
                 href="https://fonts.googleapis.com"
             />
 
-            {/* Предзагрузка критических ресурсов */}
-            <link
-                rel="preload"
-                href="/_next/static/css/app/layout.css"
-                as="style"
-            />
+            <link rel="icon" href="/favicon.ico" sizes="any"/>
+            <link rel="icon" href="/icon.svg" type="image/svg+xml"/>
+            <link rel="shortcut icon" href="/favicon.ico"/>
 
-            {/* Favicon разных размеров */}
-            <link rel="icon" href="/favicon.ico" sizes="any" />
-            {/*<link rel="icon" href="/icon.svg" type="image/svg+xml" />*/}
-            {/*<link rel="apple-touch-icon" href="/apple-touch-icon.png" />*/}
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+            <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+            <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png"/>
+            <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png"/>
+
+            <title></title>
+
         </head>
         <body className={`${montserrat.className} flex flex-col min-h-screen`}>
         {/* Добавляем fallback контент пока грузятся шрифты */}
