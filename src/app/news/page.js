@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
 import ImageWithFallback from '@/components/figma/ImageWithFallback';
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const news = [
   {
@@ -113,54 +114,61 @@ export const metadata = {
 
 export default function NewsPage() {
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="relative bg-white py-20 overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl">
-            <h1 className="mb-6 text-[rgb(60,60,60)] text-[20px] font-bold">Новости и статьи</h1>
-            <p className="text-xl text-gray-600">
-              Следите за последними новостями рынка, изменениями в законодательстве и полезными советами.
-            </p>
-          </div>
+      <div>
+        <div className="container mx-auto px-4 relative z-10 pt-6">
+          <Breadcrumbs items={[{label: 'Новости', href: '/news', isCurrent: true}]}/>
         </div>
-      </section>
+        {/* Hero Section */}
+        <section className="relative bg-white pb-20 pt-10 overflow-hidden">
+          <div
+              className="absolute top-0 right-0 w-96 h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"></div>
+          <div
+              className="absolute bottom-0 left-0 w-72 h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"></div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-3xl">
+              <h1 className="mb-6 text-[rgb(60,60,60)] text-[20px] font-bold">Новости и статьи</h1>
+              <p className="text-xl text-gray-600">
+                Следите за последними новостями рынка, изменениями в законодательстве и полезными советами.
+              </p>
+            </div>
+          </div>
+        </section>
 
-      {/* News Grid */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {news.map((article) => (
-              <div key={article.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                <ImageWithFallback
-                  src={article.image}
-                  alt={article.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <div className="flex items-center gap-4 mb-3">
+        {/* News Grid */}
+        <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {news.map((article) => (
+                  <div key={article.id}
+                       className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <ImageWithFallback
+                        src={article.image}
+                        alt={article.title}
+                        className="w-full h-48 object-cover"
+                    />
+                    <div className="p-6">
+                      <div className="flex items-center gap-4 mb-3">
                     <span className="bg-[#ffd632] bg-opacity-20 text-black px-3 py-1 rounded-full text-sm">
                       {article.category}
                     </span>
-                    <span className="text-gray-500 text-sm flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {article.date}
+                        <span className="text-gray-500 text-sm flex items-center gap-1">
+                      <Calendar className="w-4 h-4"/>
+                          {article.date}
                     </span>
+                      </div>
+                      <h3 className="mb-3">{article.title}</h3>
+                      <p className="text-gray-600 text-sm mb-4">{article.excerpt}</p>
+                      <Link href={`/news/${article.slug}`}
+                            className="text-black hover:text-gray-700 flex items-center gap-2">
+                        Читать далее
+                        <ArrowRight className="w-4 h-4"/>
+                      </Link>
+                    </div>
                   </div>
-                  <h3 className="mb-3">{article.title}</h3>
-                  <p className="text-gray-600 text-sm mb-4">{article.excerpt}</p>
-                  <Link href={`/news/${article.slug}`} className="text-black hover:text-gray-700 flex items-center gap-2">
-                    Читать далее
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
   );
 }

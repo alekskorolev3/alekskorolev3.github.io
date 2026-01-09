@@ -1,8 +1,13 @@
 'use client'
 
+import Breadcrumbs from "@/components/Breadcrumbs";
+
 export default function PrivacyPolicy() {
     return (
         <div className="bg-white text-gray-900 min-h-screen">
+            <div className="container mx-auto px-4 relative z-10 pt-6">
+                <Breadcrumbs items={[{label: 'Политика конфиденциальности', href: '/privacy', isCurrent: true}]}/>
+            </div>
             <div className="max-w-full sm:max-w-3xl md:max-w-4xl mx-auto px-4 py-8 md:py-16">
 
                 {/* Заголовок */}

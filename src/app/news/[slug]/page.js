@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { Calendar } from 'lucide-react'
 import { news } from '@/app/news/page'
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 // helper
 function getArticle(slug) {
@@ -42,6 +43,9 @@ export default async function ArticlePage({ params }) {
 
     return (
         <article className="container mx-auto px-4 py-12 max-w-4xl">
+            <div className="container mx-auto relative z-10 pt-6">
+                <Breadcrumbs items={[{label: 'Новости', href: `/news`}, {label: article.title, href: `/news/${slug}`, isCurrent: true}]}/>
+            </div>
             <h1 className="mb-4">{article.title}</h1>
 
             <div className="flex items-center gap-4 text-gray-500 mb-6">
@@ -49,7 +53,7 @@ export default async function ArticlePage({ params }) {
           {article.category}
         </span>
                 <span className="flex items-center gap-2 text-sm">
-          <Calendar className="w-4 h-4" />
+          <Calendar className="w-4 h-4"/>
                     {article.date}
         </span>
             </div>
@@ -67,7 +71,7 @@ export default async function ArticlePage({ params }) {
 
             <div
                 className="prose max-w-none"
-                dangerouslySetInnerHTML={{ __html: article.content }}
+                dangerouslySetInnerHTML={{__html: article.content}}
             />
         </article>
     )

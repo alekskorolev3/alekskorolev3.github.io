@@ -1,7 +1,8 @@
-import {CheckCircle, Search, FileText, Car} from 'lucide-react';
+import {CheckCircle, Search, FileText, Car, ChevronRight} from 'lucide-react';
 import Link from 'next/link';
 import CTA from "@/components/CTA";
 import {services} from "@/const/services";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const stepsData = [
   {
@@ -40,16 +41,21 @@ export default function ServicesPage() {
       <div className="bg-white text-gray-900 overflow-x-hidden">
 
         {/* Hero Section */}
-        <section className="relative py-16 md:py-20 overflow-hidden">
-          <div className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-t56 h-56 md:w-72 md:h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+        <section className="relative pb-16 md:pb-20 overflow-hidden">
+          <div
+              className="absolute top-0 right-0 w-72 h-72 md:w-96 md:h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div
+              className="absolute bottom-0 left-0 w-t56 h-56 md:w-72 md:h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
-          <div className="container mx-auto px-4 relative z-10 text-center">
-            <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">Наши услуги</h1>
-            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-              Полный спектр услуг по подбору автомобилей из Беларуси в Россию.
-              Профессионально, быстро, с гарантией качества.
-            </p>
+          <div className="container mx-auto px-4 relative z-10 pt-6">
+            <Breadcrumbs items={[{label: 'Услуги', href: '/services', isCurrent: true}]} className="mb-6"/>
+            <div className="text-center pt-8">
+              <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">Наши услуги</h1>
+              <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+                Полный спектр услуг по подбору автомобилей из Беларуси в Россию.
+                Профессионально, быстро, с гарантией качества.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -60,9 +66,11 @@ export default function ServicesPage() {
               {services.map((service) => {
                 const Icon = service.icon;
                 return (
-                    <div key={service.id} className="bg-white rounded-2xl shadow-sm p-6 md:p-8 hover:shadow-md transition-shadow flex flex-col h-full">
+                    <div key={service.id}
+                         className="bg-white rounded-2xl shadow-sm p-6 md:p-8 hover:shadow-md transition-shadow flex flex-col h-full">
                       <div className="flex items-start gap-4 mb-6">
-                        <div className="w-14 h-14 md:w-16 md:h-16 bg-[#ffd632]/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <div
+                            className="w-14 h-14 md:w-16 md:h-16 bg-[#ffd632]/20 rounded-lg flex items-center justify-center flex-shrink-0">
                           <Icon className="w-6 h-6 md:w-8 md:h-8 text-black"/>
                         </div>
                         <div>

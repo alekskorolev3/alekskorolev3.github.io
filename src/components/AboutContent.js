@@ -1,4 +1,5 @@
 import CTA from "@/components/CTA";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AboutContent() {
     const team = [
@@ -38,16 +39,19 @@ export default function AboutContent() {
 
     return (
         <div className="bg-white text-gray-900">
-
+            <div className="container mx-auto px-4 relative z-10 pt-6">
+                <Breadcrumbs items={[{label: 'О нас', href: '/about', isCurrent: true}]}/>
+            </div>
             {/* Hero */}
             <section className="max-w-6xl mx-auto px-4 py-12 md:py-20">
                 <div className="max-w-3xl">
-                    <div className="w-16 md:w-20 h-1.5 bg-[#ffd632] mb-4 md:mb-6 rounded-full" />
+                    <div className="w-16 md:w-20 h-1.5 bg-[#ffd632] mb-4 md:mb-6 rounded-full"/>
                     <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6">
                         О сервисе подбора автомобилей
                     </h1>
                     <p className="text-base md:text-lg text-gray-600">
-                        Мы — небольшой специализированный сервис подбора автомобилей в Минске. Помогаем найти действительно живую машину — без скрытых проблем, юридических рисков и переплат.
+                        Мы — небольшой специализированный сервис подбора автомобилей в Минске. Помогаем найти
+                        действительно живую машину — без скрытых проблем, юридических рисков и переплат.
                     </p>
                 </div>
             </section>
