@@ -8,7 +8,6 @@ export default function ContactForm() {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
-        email: '',
         message: ''
     });
 
@@ -26,7 +25,7 @@ export default function ContactForm() {
 
             if (res.ok) {
                 toast.success('Заявка успешно отправлена!');
-                setFormData({name: '', phone: '', email: '', message: ''});
+                setFormData({name: '', phone: '', message: ''});
             } else {
                 toast.error(data.error || 'Ошибка при отправке заявки');
             }
@@ -59,13 +58,6 @@ export default function ContactForm() {
                     <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required
                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ffd632] focus:border-transparent"
                            placeholder="+7 (999) 123-45-67"/>
-                </div>
-
-                <div>
-                    <label htmlFor="email" className="block mb-2">Email</label>
-                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange}
-                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ffd632] focus:border-transparent"
-                           placeholder="example@mail.com"/>
                 </div>
 
                 <div>
