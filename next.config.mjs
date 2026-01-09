@@ -14,7 +14,10 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
-  trailingSlash: false
+  trailingSlash: false,
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: true
 };
 
 export default nextConfig;
