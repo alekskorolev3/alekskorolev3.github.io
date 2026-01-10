@@ -5,7 +5,6 @@ import ClientProviders from "@/components/ClientProviders";
 import Footer from "@/components/Footer";
 import HeadScripts from "@/components/HeadScripts";
 
-// Оптимизированная загрузка шрифта
 const montserrat = Montserrat({
     subsets: ["cyrillic"], // Только кириллица - экономит 30-40% размера
     weight: ["400", "500", "600", "700"], // Убрали 500 если не используется
@@ -85,7 +84,6 @@ export default function RootLayout({children}) {
             <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png"/>
 
             <title></title>
-
         </head>
         <body className={`${montserrat.className} flex flex-col min-h-screen`}>
         {/* Добавляем fallback контент пока грузятся шрифты */}

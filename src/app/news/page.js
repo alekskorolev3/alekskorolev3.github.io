@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
 import ImageWithFallback from '@/components/figma/ImageWithFallback';
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Head from 'next/head';
 
 export const news = [
   {
@@ -105,7 +106,7 @@ export const news = [
       <p>Спасибо всем, кто выбрал нас!</p>
     `,
   },
-]
+];
 
 export const metadata = {
   title: "Новости | Flow Auto",
@@ -113,62 +114,281 @@ export const metadata = {
 };
 
 export default function NewsPage() {
-  return (
-      <div>
-        <div className="container mx-auto px-4 relative z-10 pt-6">
-          <Breadcrumbs items={[{label: 'Новости', href: '/news', isCurrent: true}]}/>
-        </div>
-        {/* Hero Section */}
-        <section className="relative bg-white pb-20 pt-10 overflow-hidden">
-          <div
-              className="absolute top-0 right-0 w-96 h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"></div>
-          <div
-              className="absolute bottom-0 left-0 w-72 h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"></div>
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl">
-              <h1 className="mb-6 text-[rgb(60,60,60)] text-[20px] font-bold">Новости и статьи</h1>
-              <p className="text-xl text-gray-600">
-                Следите за последними новостями рынка, изменениями в законодательстве и полезными советами.
-              </p>
-            </div>
-          </div>
-        </section>
+  // Структурированные данные для страницы новостей
+  const newsPageStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Новости и статьи о подборе автомобилей из Беларуси",
+    "description": "Последние новости рынка, изменения в законодательстве и полезные советы по подбору автомобилей из Беларуси в Россию",
+    "url": "https://flowauto.ru/news",
+    "publisher": {
+      "@type": "Organization",
+      "name": "FlowAuto",
+      "url": "https://flowauto.ru",
+      "logo": "https://flowauto.ru/logo.png"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": news.length,
+      "itemListOrder": "https://schema.org/ItemListOrderDescending",
+      "itemListElement": news.map((article, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "NewsArticle",
+          "headline": article.title,
+          "description": article.description,
+          "datePublished": article.date,
+          "dateModified": article.date,
+          "author": {
+            "@type": "Organization",
+            "name": "FlowAuto"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "FlowAuto",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://flowauto.ru/logo.png"
+            }
+          },
+          "articleSection": article.category,
+          "articleBody": article.content.replace(/<[^>]*>/g, '').substring(0, 200),
+          "image": {
+            "@type": "ImageObject",
+            "url": article.image,
+            "height": 400,
+            "width": 600
+          },
+          "url": `https://flowauto.ru/news/${article.slug}`,
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://flowauto.ru/news/${article.slug}`
+          }
+        }
+      }))
+    }
+  };
 
-        {/* News Grid */}
-        <section className="py-12 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {news.map((article) => (
-                  <div key={article.id}
-                       className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                    <ImageWithFallback
-                        src={article.image}
-                        alt={article.title}
-                        className="w-full h-48 object-cover"
-                    />
-                    <div className="p-6">
-                      <div className="flex items-center gap-4 mb-3">
-                    <span className="bg-[#ffd632] bg-opacity-20 text-black px-3 py-1 rounded-full text-sm">
-                      {article.category}
-                    </span>
-                        <span className="text-gray-500 text-sm flex items-center gap-1">
-                      <Calendar className="w-4 h-4"/>
-                          {article.date}
-                    </span>
+  // Структурированные данные для блога
+  const blogStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": "https://flowauto.ru/news/#blog",
+    "name": "Блог FlowAuto",
+    "description": "Новости и статьи о подборе автомобилей из Беларуси",
+    "publisher": {
+      "@type": "Organization",
+      "name": "FlowAuto",
+      "url": "https://flowauto.ru"
+    },
+    "blogPost": news.map(article => ({
+      "@type": "BlogPosting",
+      "headline": article.title,
+      "description": article.description,
+      "datePublished": article.date,
+      "dateModified": article.date,
+      "author": {
+        "@type": "Organization",
+        "name": "FlowAuto"
+      },
+      "url": `https://flowauto.ru/news/${article.slug}`
+    }))
+  };
+
+  // Breadcrumb structured data
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Главная",
+        "item": "https://flowauto.ru"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Новости",
+        "item": "https://flowauto.ru/news"
+      }
+    ]
+  };
+
+  return (
+      <>
+        <Head>
+          {/* Основная разметка страницы новостей */}
+          <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify(newsPageStructuredData)
+              }}
+          />
+
+          {/* Разметка для блога */}
+          <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify(blogStructuredData)
+              }}
+          />
+
+          {/* Breadcrumb разметка */}
+          <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify(breadcrumbStructuredData)
+              }}
+          />
+        </Head>
+
+        <div itemScope itemType="https://schema.org/CollectionPage">
+          <div className="container mx-auto px-4 relative z-10 pt-6">
+            <Breadcrumbs items={[{label: 'Новости', href: '/news', isCurrent: true}]}/>
+          </div>
+
+          {/* Hero Section с микроразметкой */}
+          <section
+              className="relative bg-white pb-20 pt-10 overflow-hidden"
+              itemScope
+              itemType="https://schema.org/CreativeWork"
+          >
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#ffd632] rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-72 h-72 bg-black rounded-full opacity-5 translate-y-1/2 -translate-x-1/2"></div>
+
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="max-w-3xl">
+                <h1
+                    className="mb-6 text-[rgb(60,60,60)] text-[20px] font-bold"
+                    itemProp="headline"
+                >
+                  Новости и статьи
+                </h1>
+                <p
+                    className="text-xl text-gray-600"
+                    itemProp="description"
+                >
+                  Следите за последними новостями рынка, изменениями в законодательстве и полезными советами.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* News Grid с микроразметкой */}
+          <section
+              className="py-12 bg-gray-50"
+              itemProp="mainEntity"
+              itemScope
+              itemType="https://schema.org/ItemList"
+          >
+            <meta itemProp="numberOfItems" content={news.length.toString()} />
+            <meta itemProp="itemListOrder" content="https://schema.org/ItemListOrderDescending" />
+
+            <div className="container mx-auto px-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {news.map((article, index) => (
+                    <div
+                        key={article.id}
+                        className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+                        itemProp="itemListElement"
+                        itemScope
+                        itemType="https://schema.org/ListItem"
+                    >
+                      <meta itemProp="position" content={(index + 1).toString()} />
+
+                      <div itemProp="item" itemScope itemType="https://schema.org/NewsArticle">
+                        {/* Изображение */}
+                        <div itemProp="image" itemScope itemType="https://schema.org/ImageObject">
+                          <meta itemProp="url" content={article.image} />
+                          <meta itemProp="width" content="600" />
+                          <meta itemProp="height" content="400" />
+                          <ImageWithFallback
+                              src={article.image}
+                              alt={article.title}
+                              className="w-full h-48 object-cover"
+                          />
+                        </div>
+
+                        {/* Контент статьи */}
+                        <div className="p-6">
+                          <div className="flex items-center gap-4 mb-3">
+                        <span
+                            className="bg-[#ffd632] bg-opacity-20 text-black px-3 py-1 rounded-full text-sm"
+                            itemProp="articleSection"
+                        >
+                          {article.category}
+                        </span>
+                            <span className="text-gray-500 text-sm flex items-center gap-1">
+                          <Calendar className="w-4 h-4"/>
+                          <time
+                              itemProp="datePublished"
+                              dateTime={article.date}
+                          >
+                            {article.date}
+                          </time>
+                        </span>
+                          </div>
+
+                          <h3
+                              className="mb-3"
+                              itemProp="headline"
+                          >
+                            {article.title}
+                          </h3>
+
+                          <p
+                              className="text-gray-600 text-sm mb-4"
+                              itemProp="description"
+                          >
+                            {article.excerpt}
+                          </p>
+
+                          <Link
+                              href={`/news/${article.slug}`}
+                              className="text-black hover:text-gray-700 flex items-center gap-2"
+                              itemProp="url"
+                          >
+                            Читать далее
+                            <ArrowRight className="w-4 h-4"/>
+                          </Link>
+                        </div>
+
+                        {/* Скрытые метаданные для статьи */}
+                        <div style={{ display: 'none' }}>
+                          <div itemProp="author" itemScope itemType="https://schema.org/Organization">
+                            <meta itemProp="name" content="FlowAuto" />
+                          </div>
+
+                          <div itemProp="publisher" itemScope itemType="https://schema.org/Organization">
+                            <meta itemProp="name" content="FlowAuto" />
+                            <div itemProp="logo" itemScope itemType="https://schema.org/ImageObject">
+                              <meta itemProp="url" content="https://flowauto.ru/logo.png" />
+                            </div>
+                          </div>
+
+                          <meta itemProp="dateModified" content={article.date} />
+                          <meta itemProp="mainEntityOfPage" content={`https://flowauto.ru/news/${article.slug}`} />
+                        </div>
                       </div>
-                      <h3 className="mb-3">{article.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{article.excerpt}</p>
-                      <Link href={`/news/${article.slug}`}
-                            className="text-black hover:text-gray-700 flex items-center gap-2">
-                        Читать далее
-                        <ArrowRight className="w-4 h-4"/>
-                      </Link>
                     </div>
-                  </div>
-              ))}
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Скрытые метаданные для публикатора */}
+          <div style={{ display: 'none' }}>
+            <div itemProp="publisher" itemScope itemType="https://schema.org/Organization">
+              <meta itemProp="name" content="FlowAuto" />
+              <meta itemProp="url" content="https://flowauto.ru" />
+              <div itemProp="logo" itemScope itemType="https://schema.org/ImageObject">
+                <meta itemProp="url" content="https://flowauto.ru/logo.png" />
+              </div>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </>
   );
 }
