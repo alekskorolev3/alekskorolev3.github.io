@@ -1,3 +1,5 @@
+import {ADDRESS, PHONE} from "@/const/contacts";
+
 const Footer = () => {
     return (
         <footer className="bg-gray-900 text-white" itemScope itemType="https://schema.org/WPFooter">
@@ -5,8 +7,10 @@ const Footer = () => {
 
                 {/* Название с микроразметкой */}
                 <div itemScope itemType="https://schema.org/Organization">
-                    <meta itemProp="name" content="FlowAuto" />
-                    <meta itemProp="url" content="https://flowauto.ru" />
+                    <meta itemProp="name" content="FlowAuto"/>
+                    <meta itemProp="url" content="flowauto.ru"/>
+                    <meta itemProp="telephone" content={PHONE}/>
+                    <meta itemProp="address" content={ADDRESS}/>
 
                     <h3 className="text-lg sm:text-xl font-semibold mb-2 leading-[1.5] min-h-[1.75rem]">
                         <span itemProp="name">FlowAuto</span>
@@ -35,8 +39,10 @@ const Footer = () => {
 
                 {/* Копирайт */}
                 <div itemScope itemType="https://schema.org/CreativeWork">
-                    <meta itemProp="copyrightYear" content="2026" />
-                    <meta itemProp="copyrightHolder" content="flowauto.ru" />
+                    <meta itemProp="copyrightYear" content="2026"/>
+                    <meta itemProp="copyrightHolder" content="flowauto.ru"/>
+                    <meta itemProp="description" content="© 2026 flowauto.ru Все права защищены."/>
+                    <meta itemProp="description" content="© 2026 flowauto.ru Все права защищены."/>
 
                     <p className="text-gray-500 text-xs sm:text-sm leading-[1.2] min-h-[1rem]"
                        itemProp="copyrightNotice">
@@ -47,7 +53,6 @@ const Footer = () => {
                 {/* Скрытая микроразметка для SEO */}
                 <div style={{ display: 'none' }} itemScope itemType="https://schema.org/WebSite">
                     <meta itemProp="name" content="FlowAuto" />
-                    <meta itemProp="url" content="https://flowauto.ru" />
                     <meta itemProp="description" content="Подбор автомобилей из Беларуси в Россию" />
                     <meta itemProp="inLanguage" content="ru-RU" />
                 </div>

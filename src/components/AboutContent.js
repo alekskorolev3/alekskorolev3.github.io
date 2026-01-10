@@ -94,11 +94,7 @@ export default function AboutContent() {
                 "@type": "Person",
                 "name": member.title.split(" — ")[0],
                 "jobTitle": member.title.split(" — ")[1],
-                "description": member.text,
-                "worksFor": {
-                    "@type": "Organization",
-                    "name": "FlowAuto"
-                }
+                "description": member.text
             }
         }))
     };
@@ -270,9 +266,6 @@ export default function AboutContent() {
                                     <meta itemProp="name" content={item.title.split(" — ")[0]} />
                                     <meta itemProp="jobTitle" content={item.title.split(" — ")[1]} />
                                     <meta itemProp="description" content={item.text} />
-                                    <div itemProp="worksFor" itemScope itemType="https://schema.org/Organization">
-                                        <meta itemProp="name" content="FlowAuto" />
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -294,7 +287,7 @@ export default function AboutContent() {
                         </h2>
                         <div
                             className="max-w-3xl text-gray-700 text-base md:text-lg"
-                            itemProp="text"
+                            itemProp="description"
                         >
                             <p>
                                 Мы не продаём автомобили и не связаны с автосалонами или перекупщиками.

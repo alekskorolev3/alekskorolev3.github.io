@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "../imports/Logo22221";
 import HeaderClient from "./HeaderClient";
-import { PHONE, PHONE_TEXT, TELEGRAM, WHATSAPP } from "@/const/contacts";
+import {ADDRESS, PHONE, PHONE_TEXT, TELEGRAM, WHATSAPP} from "@/const/contacts";
 
 export default function Header() {
   const pathname = usePathname();
@@ -45,6 +45,8 @@ export default function Header() {
       "@id": `https://flowauto.ru/#organization`,
       "name": "Название вашей компании", // Замените на название компании
       "url": "https://flowauto.ru",
+      "telephone": PHONE,
+      "address": ADDRESS,
       "logo": {
         "@type": "ImageObject",
         "url": `https://flowauto.ru/logo.png`, // Укажите путь к логотипу
